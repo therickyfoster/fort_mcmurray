@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Techy Kids · Session Helper</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="description" content="A lightweight planner and guardrail dashboard to help run Techy Kids sessions more smoothly and consistently." />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-elevated: #0b1020;
+      --bg-soft: #111827;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.15);
+      --accent-strong: #0ea5e9;
+      --accent-alt: #a855f7;
+      --fg: #f9fafb;
+      --fg-muted: #9ca3af;
+      --danger: #f97373;
+      --ok: #4ade80;
+      --border-subtle: rgba(148,163,184,0.35);
+      --shadow-soft: 0 18px 45px rgba(15,23,42,0.7);
+      --radius-lg: 16px;
+      --radius-pill: 999px;
+      --transition-fast: 180ms ease-out;
+      --font-sans: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--fg);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1200px;
+      margin: 16px;
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, #111827 0, #020617 45%, #020617 100%);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      border: 1px solid rgba(148,163,184,0.35);
+      position: relative;
+    }
+
+    /* Splash / intro */
+
+    #splash {
+      padding: 32px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    @media (min-width: 800px) {
+      #splash {
+        padding: 32px 32px 28px;
+        flex-direction: row;
+      }
+    }
+
+    .splash-left,
+    .splash-right {
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.4);
+      color: var(--fg-muted);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #f9fafb 0, #22c55e 40%, #16a34a 100%);
+      box-shadow: 0 0 14px rgba(34,197,94,0.9);
+    }
+
+    h1 {
+      margin: 14px 0 10px;
+      font-size: clamp(1.7rem, 2.4vw + 1rem, 2.4rem);
+      letter-spacing: 0.02em;
+    }
+
+    h1 span.highlight {
+      background: linear-gradient(120deg, var(--accent-strong), var(--accent-alt));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .splash-subtitle {
+      color: var(--fg-muted);
+      max-width: 540px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .splash-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 2px;
+      font-size: 11px;
+      color: var(--fg-muted);
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(15,23,42,0.9);
+      border: 1px dashed rgba(148,163,184,0.4);
+    }
+
+    .splash-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      border-radius: var(--radius-pill);
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast);
+      background: none;
+      color: inherit;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top left, var(--accent-strong), #1d4ed8);
+      color: #0b1020;
+      border-color: rgba(56,189,248,0.2);
+      box-shadow: 0 12px 30px rgba(37,99,235,0.4);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(37,99,235,0.55);
+    }
+
+    .btn-ghost {
+      border-color: rgba(148,163,184,0.4);
+      color: var(--fg-muted);
+      background: rgba(15,23,42,0.75);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent-soft);
+      color: var(--accent);
+      background: rgba(15,23,42,0.95);
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+    }
+
+    .splash-right {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      gap: 12px;
+    }
+
+    @media (min-width: 800px) {
+      .splash-right {
+        margin-top: 0;
+        margin-left: 8px;
+      }
+    }
+
+    .chip-card {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.95), #020617);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.82rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .chip-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--fg-muted);
+    }
+
+    .chip-main {
+      font-size: 0.9rem;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip-tag {
+      border-radius: var(--radius-pill);
+      padding: 3px 9px;
+      border: 1px solid rgba(148,163,184,0.65);
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+      background: rgba(15,23,42,0.85);
+    }
+
+    .note-inline {
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+      opacity: 0.9;
+    }
+
+    hr.section-divider {
+      border: none;
+      border-top: 1px solid rgba(31,41,55,0.9);
+      margin: 0;
+    }
+
+    /* Main app */
+
+    #app {
+      display: none;
+      padding: 18px 20px 22px;
+    }
+
+    @media (min-width: 800px) {
+      #app {
+        padding: 18px 28px 28px;
+      }
+    }
+
+    .app-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .app-title {
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .app-title span.icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 30% 30%, #f9fafb 0, var(--accent-strong) 35%, var(--accent-alt) 90%);
+      box-shadow: 0 0 18px rgba(56,189,248,0.7);
+      font-size: 1.05rem;
+    }
+
+    .app-subtitle {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+    }
+
+    .tagline strong {
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      align-items: center;
+    }
+
+    .toolbar span {
+      color: var(--fg-muted);
+    }
+
+    .toolbar small {
+      color: var(--fg-muted);
+    }
+
+    .toolbar .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(148,163,184,0.7);
+    }
+
+    .toolbar button {
+      font-size: 0.8rem;
+      padding: 6px 10px;
+    }
+
+    /* Tabs */
+
+    .tab-bar {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 4px;
+      border-radius: var(--radius-pill);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(31,41,55,0.9);
+    }
+
+    .tab-btn {
+      flex: 1 1 auto;
+      min-width: 110px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      color: var(--fg-muted);
+      padding: 7px 10px;
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .tab-btn span.icon {
+      font-size: 1.02rem;
+    }
+
+    .tab-btn.active {
+      background: radial-gradient(circle at top, var(--accent-soft), rgba(76,29,149,0.85));
+      color: var(--fg);
+      box-shadow: 0 10px 25px rgba(15,23,42,0.9);
+      transform: translateY(-1px);
+    }
+
+    .tab-btn:not(.active):hover {
+      background: rgba(15,23,42,0.9);
+      color: var(--accent);
+    }
+
+    /* Tab content */
+
+    .tab-panels {
+      margin-top: 14px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: panelFade 200ms ease-out;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes panelFade {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    @media (min-width: 960px) {
+      .grid-cols-2 {
+        grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.98) 0, #020617 40%, #020617 100%);
+      border: 1px solid rgba(31,41,55,0.95);
+      padding: 14px 14px 13px;
+      box-shadow: 0 12px 30px rgba(15,23,42,0.95);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-title span.icon {
+      font-size: 1.05rem;
+    }
+
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+    }
+
+    .card-badge {
+      font-size: 0.7rem;
+      padding: 3px 7px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.55);
+      color: var(--fg-muted);
+      background: rgba(15,23,42,0.85);
+      white-space: nowrap;
+    }
+
+    .card-body {
+      font-size: 0.86rem;
+      color: var(--fg-muted);
+    }
+
+    .card-body p {
+      margin: 0 0 8px;
+      line-height: 1.5;
+    }
+
+    .card-body ul {
+      padding-left: 1.15rem;
+      margin: 4px 0 6px;
+    }
+
+    .card-body li {
+      margin-bottom: 3px;
+    }
+
+    .tagline-soft {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+    }
+
+    .field-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    label {
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+    }
+
+    input[type="number"],
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    textarea,
+    select {
+      background: #020617;
+      border: 1px solid rgba(51,65,85,0.9);
+      color: var(--fg);
+      font-family: inherit;
+      font-size: 0.82rem;
+      border-radius: 8px;
+      padding: 6px 8px;
+      min-width: 0;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.45);
+      background: #020617;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent-strong);
+    }
+
+    .pill-input {
+      border-radius: var(--radius-pill);
+      padding: 6px 10px;
+    }
+
+    .pill-input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .small {
+      font-size: 0.76rem;
+      color: var(--fg-muted);
+    }
+
+    .list-inline {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .kit-tag {
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.7);
+      font-size: 0.76rem;
+      color: var(--fg-muted);
+      background: rgba(15,23,42,0.9);
+    }
+
+    .kit-tag span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      margin-right: 4px;
+      display: inline-block;
+      background: radial-gradient(circle at 30% 30%, #f9fafb 0, var(--accent-strong) 40%, var(--accent-alt) 100%);
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.84rem;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .checklist li label {
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .badge-inline {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: var(--radius-pill);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.5);
+      margin-left: 4px;
+    }
+
+    .muted {
+      color: var(--fg-muted);
+    }
+
+    .status-pill {
+      min-width: 72px;
+      text-align: center;
+      border-radius: var(--radius-pill);
+      padding: 3px 8px;
+      font-size: 0.7rem;
+      border: 1px solid rgba(148,163,184,0.55);
+    }
+
+    .status-ok {
+      border-color: rgba(74,222,128,0.7);
+      color: var(--ok);
+    }
+
+    .status-warn {
+      border-color: rgba(248,113,113,0.7);
+      color: var(--danger);
+    }
+
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .flex-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mt-4 { margin-top: 4px; }
+    .mt-6 { margin-top: 6px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-10 { margin-top: 10px; }
+    .mt-12 { margin-top: 12px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-top: 6px;
+    }
+
+    th, td {
+      padding: 6px 7px;
+      border-bottom: 1px solid rgba(31,41,55,0.95);
+      text-align: left;
+    }
+
+    th {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--fg-muted);
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(15,23,42,0.65);
+    }
+
+    .badge-time {
+      font-size: 0.76rem;
+      padding: 2px 6px;
+      border-radius: var(--radius-pill);
+      background: rgba(8,47,73,0.9);
+      border: 1px solid rgba(56,189,248,0.55);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .timeline {
+      list-style: none;
+      padding-left: 0;
+      margin: 6px 0 0;
+      font-size: 0.82rem;
+    }
+
+    .timeline li {
+      display: grid;
+      grid-template-columns: 90px minmax(0,1fr);
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-time {
+      color: var(--fg-muted);
+      font-size: 0.78rem;
+    }
+
+    .timeline-main {
+      font-size: 0.84rem;
+    }
+
+    .timeline-main strong {
+      color: var(--fg);
+    }
+
+    .note-box {
+      border-radius: 10px;
+      border: 1px dashed rgba(148,163,184,0.6);
+      padding: 7px 9px;
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+      background: rgba(15,23,42,0.75);
+    }
+
+    .note-box strong {
+      color: var(--accent);
+    }
+
+    .btn-xs {
+      padding: 4px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.95);
+      color: var(--fg-muted);
+      font-size: 0.72rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-xs:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(31,41,55,0.9);
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- SPLASH -->
+  <section id="splash">
+    <div class="splash-left">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Techy Kids · Session Guardrails
+        <span style="opacity:0.5;">· v1</span>
+      </div>
+      <h1>
+        Make every <span class="highlight">Techy Kids</span> hour smooth, safe, and repeatable.
+      </h1>
+      <p class="splash-subtitle">
+        A tiny helper dashboard for Wood Buffalo Regional Library staff and volunteers running
+        <strong>Techy Kids</strong> (ages 6–8). Plan stations, balance groups, keep safety in view,
+        and capture what worked so next week is even easier.
+      </p>
+      <div class="splash-meta">
+        <span class="pill">Duration: 60 minutes</span>
+        <span class="pill">Audience: Kids (6–8yrs)</span>
+        <span class="pill">Focus: Technology &amp; early coding</span>
+      </div>
+      <div class="splash-actions">
+        <button class="btn-primary" id="btnStart">
+          <span class="btn-icon">🚀</span>
+          Launch session helper
+        </button>
+        <a class="btn-ghost" href="https://wbrl.bibliocommons.com/events/68f7c7e375911f280019da0c" target="_blank" rel="noopener">
+          View official event page
+        </a>
+      </div>
+      <p class="note-inline">
+        No login, no server. Everything runs in your browser and saves basic notes to this device only.
+      </p>
+    </div>
+    <div class="splash-right">
+      <article class="chip-card">
+        <div class="chip-title">Core kits</div>
+        <div class="chip-main">
+          <div class="chip-list">
+            <span class="chip-tag">Ozobot</span>
+            <span class="chip-tag">COJI</span>
+            <span class="chip-tag">OSMO</span>
+            <span class="chip-tag">iPads</span>
+            <span class="chip-tag">Rumble &amp; Bumble</span>
+            <span class="chip-tag">Dart</span>
+            <span class="chip-tag">Code-A-Pillar</span>
+            <span class="chip-tag">Edison</span>
+          </div>
+        </div>
+      </article>
+      <article class="chip-card">
+        <div class="chip-title">Built-in guardrails</div>
+        <div class="chip-main">
+          <ul style="padding-left:1em;margin:4px 0 0;">
+            <li>Safety &amp; inclusion checklist</li>
+            <li>Station &amp; rotation planner</li>
+            <li>Simple session timeline</li>
+            <li>Local notes &amp; reflections</li>
+          </ul>
+        </div>
+      </article>
+      <article class="chip-card">
+        <div class="chip-title">Use this before &amp; during</div>
+        <div class="chip-main">
+          <p style="margin:0;">
+            Open 10–15 minutes early, tick through setup, then glance at the session flow when things get busy.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- APP -->
+  <section id="app">
+    <header class="app-header">
+      <div>
+        <div class="app-title">
+          <span class="icon">🧩</span>
+          <span>Techy Kids · Session Helper</span>
+        </div>
+        <div class="app-subtitle">
+          Wood Buffalo Regional Library · Kids (6–8yrs) · Wednesday evenings
+        </div>
+      </div>
+      <div class="toolbar">
+        <span>Session snapshot:</span>
+        <div class="dot"></div>
+        <small id="sessionSummary">No session configured yet</small>
+        <button class="btn-xs" id="btnReset">
+          ♻ Reset
+        </button>
+      </div>
+    </header>
+
+    <p class="tagline">
+      This page is meant as a <strong>launch pad</strong>: quick planning, safety guardrails, and reusable notes for each weekly
+      <strong>Techy Kids</strong> slot. Adjust it however your team works best.
+    </p>
+
+    <!-- Tabs -->
+    <nav class="tab-bar" aria-label="Sections">
+      <button class="tab-btn active" data-tab="overview">
+        <span class="icon">📌</span> Overview
+      </button>
+      <button class="tab-btn" data-tab="setup">
+        <span class="icon">🛠️</span> Setup &amp; Kits
+      </button>
+      <button class="tab-btn" data-tab="stations">
+        <span class="icon">🔁</span> Stations &amp; Rotations
+      </button>
+      <button class="tab-btn" data-tab="flow">
+        <span class="icon">⏱️</span> Session Flow
+      </button>
+      <button class="tab-btn" data-tab="notes">
+        <span class="icon">📝</span> Reflections &amp; Handover
+      </button>
+    </nav>
+
+    <section class="tab-panels">
+      <!-- OVERVIEW -->
+      <div class="tab-panel active" id="panel-overview">
+        <div class="grid grid-cols-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">🎯</span>
+                  Purpose &amp; framing
+                </div>
+                <div class="card-meta">
+                  Quick mental checklist before kids arrive.
+                </div>
+              </div>
+              <span class="card-badge">3–5 min read</span>
+            </div>
+            <div class="card-body">
+              <p>
+                <strong>Techy Kids</strong> introduces 6–8 year-olds to playful technology:
+                robots, tablets, tangible coding toys. The goal isn’t perfection, it’s:
+              </p>
+              <ul>
+                <li>Lowering fear around “tech” by making it hands-on and silly.</li>
+                <li>Giving every child a chance to succeed at least once.</li>
+                <li>Planting curiosity: “I can figure this out if I experiment.”</li>
+              </ul>
+              <p class="mt-6">
+                Use this helper to:
+              </p>
+              <ul>
+                <li>Estimate groups and station rotations.</li>
+                <li>Double-check safety and inclusion basics.</li>
+                <li>Capture what worked (and what didn’t) right after the session.</li>
+              </ul>
+              <div class="note-box mt-8">
+                <strong>Rule of thumb:</strong>
+                If kids are <em>laughing, trying ideas, and being kind</em>, you’re winning — even if the robots misbehave.
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">🧒</span>
+                  Age-specific guardrails (6–8yrs)
+                </div>
+                <div class="card-meta">
+                  Keep expectations &amp; difficulty in the sweet spot.
+                </div>
+              </div>
+              <span class="card-badge">Guidance</span>
+            </div>
+            <div class="card-body">
+              <ul class="checklist">
+                <li>
+                  <input type="checkbox" id="ov1">
+                  <label for="ov1">
+                    Keep instructions <strong>short and concrete</strong> (1 idea at a time, then let them touch the tech).
+                  </label>
+                </li>
+                <li>
+                  <input type="checkbox" id="ov2">
+                  <label for="ov2">
+                    Pair readers with non-readers or use icons / colour cues so nobody is left behind.
+                  </label>
+                </li>
+                <li>
+                  <input type="checkbox" id="ov3">
+                  <label for="ov3">
+                    Normalize “debugging”: celebrate “broken” robots as puzzles to solve together.
+                  </label>
+                </li>
+                <li>
+                  <input type="checkbox" id="ov4">
+                  <label for="ov4">
+                    Watch for kids who quietly withdraw — invite them into simple roles (button pressing, line drawing, turning pages).
+                  </label>
+                </li>
+              </ul>
+              <p class="mt-8 tagline-soft">
+                If in doubt, <strong>lower complexity</strong>, not enthusiasm: fewer steps, bigger smiles.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- SETUP & KITS -->
+      <div class="tab-panel" id="panel-setup">
+        <div class="grid grid-cols-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">📋</span>
+                  Today’s session snapshot
+                </div>
+                <div class="card-meta">
+                  This drives the rest of the planner (rotations, notes, etc.).
+                </div>
+              </div>
+              <span class="card-badge">Inputs</span>
+            </div>
+            <div class="card-body">
+              <div class="field-row">
+                <label for="sessionDate">Date</label>
+                <input type="date" id="sessionDate" class="pill-input" />
+              </div>
+              <div class="field-row">
+                <label for="sessionTime">Start time</label>
+                <input type="time" id="sessionTime" class="pill-input" />
+              </div>
+              <div class="field-row">
+                <label for="numKids">Expected number of kids</label>
+                <input type="number" id="numKids" class="pill-input" min="1" max="40" placeholder="e.g. 12" />
+              </div>
+              <div class="field-row">
+                <label for="numLeaders">Adults / volunteers on floor</label>
+                <input type="number" id="numLeaders" class="pill-input" min="1" max="10" placeholder="e.g. 3" />
+              </div>
+              <div class="field-row">
+                <label for="sessionNotesShort">Focus for this week</label>
+                <input type="text" id="sessionNotesShort" class="pill-input" placeholder="e.g. Intro to robots · teamwork" />
+              </div>
+              <button class="btn-xs mt-6" id="btnSaveSessionCore">
+                💾 Save session basics (this device)
+              </button>
+              <p class="small mt-4">
+                We store basics in <strong>localStorage</strong> so that if you reload this page on the same device, your last session
+                settings reappear.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">🧱</span>
+                  Kits in use tonight
+                </div>
+                <div class="card-meta">
+                  Toggle what you plan to set out. Use this to seed rotations.
+                </div>
+              </div>
+              <span class="card-badge">Stations</span>
+            </div>
+            <div class="card-body">
+              <div class="pill-input-group">
+                <span class="small">Quick preset:</span>
+                <button class="btn-xs" data-preset="light">
+                  🌱 Easy rotation (3–4 stations)
+                </button>
+                <button class="btn-xs" data-preset="full">
+                  🌈 Full kit spread
+                </button>
+              </div>
+              <ul class="checklist" id="kitList">
+                <!-- Filled by JS -->
+              </ul>
+              <p class="small mt-6">
+                <strong>Tip:</strong> For younger or more energetic groups, fewer stations with clearer goals beats using everything at once.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <article class="card mt-10">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <span class="icon">🛡️</span>
+                Safety &amp; inclusion checklist
+              </div>
+              <div class="card-meta">
+                Tick through this before you open the room. It’s intentionally short.
+              </div>
+            </div>
+            <span class="card-badge">Pre-session</span>
+          </div>
+          <div class="card-body">
+            <ul class="checklist">
+              <li>
+                <input type="checkbox" id="safe1">
+                <label for="safe1">
+                  Cables and trip hazards tucked away; robot paths clear of feet and bags.
+                </label>
+              </li>
+              <li>
+                <input type="checkbox" id="safe2">
+                <label for="safe2">
+                  All kits requiring batteries / charging tested quickly (<span class="badge-inline">move, light, sound</span>).
+                </label>
+              </li>
+              <li>
+                <input type="checkbox" id="safe3">
+                <label for="safe3">
+                  Volume reasonable for small ears; no headphones required for participation.
+                </label>
+              </li>
+              <li>
+                <input type="checkbox" id="safe4">
+                <label for="safe4">
+                  At least one station can be enjoyed with <strong>minimal reading</strong> and <strong>minimal fine motor skills</strong>.
+                </label>
+              </li>
+              <li>
+                <input type="checkbox" id="safe5">
+                <label for="safe5">
+                  You’ve agreed who handles <strong>behaviour support &amp; parent questions</strong> (so leaders don’t all answer at once).
+                </label>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <!-- STATIONS & ROTATIONS -->
+      <div class="tab-panel" id="panel-stations">
+        <div class="grid grid-cols-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">🧮</span>
+                  Group &amp; rotation planner
+                </div>
+                <div class="card-meta">
+                  Uses your kid count and active kits to propose a rotation.
+                </div>
+              </div>
+              <span class="card-badge">Auto-calculated</span>
+            </div>
+            <div class="card-body">
+              <div class="field-row">
+                <label for="desiredStations">
+                  Number of stations to run
+                </label>
+                <input type="number" id="desiredStations" class="pill-input" min="1" max="8" />
+              </div>
+              <div class="field-row">
+                <label for="rotationsPerKid">
+                  Rotations per kid (excluding welcome/cleanup)
+                </label>
+                <input type="number" id="rotationsPerKid" class="pill-input" min="1" max="6" value="3" />
+              </div>
+              <button class="btn-xs mt-6" id="btnGeneratePlan">
+                📊 Generate rotation plan
+              </button>
+              <p class="small mt-4">
+                By default, we try to:
+                <br>• keep groups roughly equal
+                <br>• avoid overcrowding robot-heavy stations
+                <br>• leave a few minutes buffer before and after
+              </p>
+              <div class="note-box mt-6">
+                <strong>Shortcut:</strong> If attendance is small (e.g. 4–6 kids), run
+                <em>one station at a time together</em> instead of rotations.
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">🔎</span>
+                  Snapshot: kids, leaders, stations
+                </div>
+                <div class="card-meta">
+                  Quick glance at the numbers you’re working with.
+                </div>
+              </div>
+              <span class="card-badge">At-a-glance</span>
+            </div>
+            <div class="card-body">
+              <p class="muted">
+                Based on your inputs so far:
+              </p>
+              <table>
+                <tbody>
+                <tr>
+                  <th>Kids</th>
+                  <td id="summaryKids">–</td>
+                </tr>
+                <tr>
+                  <th>Leaders</th>
+                  <td id="summaryLeaders">–</td>
+                </tr>
+                <tr>
+                  <th>Active stations</th>
+                  <td id="summaryStations">–</td>
+                </tr>
+                <tr>
+                  <th>Est. kids per station</th>
+                  <td id="summaryKidsPerStation">–</td>
+                </tr>
+                </tbody>
+              </table>
+              <p class="small mt-6" id="summaryAdvice">
+                Enter kids, leaders, and tick which kits you’ll use on the previous tab.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <article class="card mt-10">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <span class="icon">📋</span>
+                Suggested rotation table
+              </div>
+              <div class="card-meta">
+                Editable by you; we’re just suggesting a pattern to start.
+              </div>
+            </div>
+            <span class="card-badge">Preview</span>
+          </div>
+          <div class="card-body">
+            <div id="rotationTableWrapper" class="small">
+              <p class="muted">
+                Once you generate a plan, it will appear here with groups (A, B, C...) and station assignments
+                per rotation. You can also print this page or copy it into your own notes.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- SESSION FLOW -->
+      <div class="tab-panel" id="panel-flow">
+        <div class="grid grid-cols-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">⏱️</span>
+                  60-minute flow template
+                </div>
+                <div class="card-meta">
+                  Adjust on the fly; this is a gentle default.
+                </div>
+              </div>
+              <span class="card-badge">Timeline</span>
+            </div>
+            <div class="card-body">
+              <ul class="timeline">
+                <li>
+                  <div class="timeline-time">0–5 min</div>
+                  <div class="timeline-main">
+                    <strong>Arrival &amp; hello</strong> — names, basic expectations
+                    (<em>kind hands, kind words, share the tech</em>).
+                  </div>
+                </li>
+                <li>
+                  <div class="timeline-time">5–10 min</div>
+                  <div class="timeline-main">
+                    <strong>Show &amp; tell</strong> — quickly show each station (“This robot follows colours… This one uses emojis…”),
+                    don’t deep-teach yet.
+                  </div>
+                </li>
+                <li>
+                  <div class="timeline-time">10–15 min</div>
+                  <div class="timeline-main">
+                    <strong>First station</strong> — keep instructions to one or two clear steps, let them discover.
+                  </div>
+                </li>
+                <li>
+                  <div class="timeline-time">15–45 min</div>
+                  <div class="timeline-main">
+                    <strong>Rotations</strong> — 2–3 rotations of 8–12 minutes depending on group size and energy.
+                    Use the planner numbers as a guide.
+                  </div>
+                </li>
+                <li>
+                  <div class="timeline-time">45–55 min</div>
+                  <div class="timeline-main">
+                    <strong>Free explore / favourite revisit</strong> — let kids return to the station they loved most.
+                  </div>
+                </li>
+                <li>
+                  <div class="timeline-time">55–60 min</div>
+                  <div class="timeline-main">
+                    <strong>Clean-up &amp; closing question</strong> — “What did your robot do today that surprised you?”
+                  </div>
+                </li>
+              </ul>
+              <p class="small mt-8">
+                Use this flow as a spine. If things go off-script but kids stay engaged and safe, you’re on mission.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">💬</span>
+                  Prompts &amp; gentle scripts
+                </div>
+                <div class="card-meta">
+                  Handy phrases for tricky or busy moments.
+                </div>
+              </div>
+              <span class="card-badge">On the fly</span>
+            </div>
+            <div class="card-body">
+              <p><strong>To encourage trying again:</strong></p>
+              <ul>
+                <li>“Looks like we made the robot confused. Want to be its detective with me?”</li>
+                <li>“We just learned one way that <em>doesn’t</em> work. Let’s try one tiny change.”</li>
+              </ul>
+              <p class="mt-6"><strong>To rebalance groups kindly:</strong></p>
+              <ul>
+                <li>“This robot is feeling crowded. Can two explorers be heroes and help another station?”</li>
+                <li>“We’re going to send some teammates on a mission to the iPad lab so everyone gets space.”</li>
+              </ul>
+              <p class="mt-6"><strong>For kids nervous about tech:</strong></p>
+              <ul>
+                <li>“You don’t have to know anything yet. Your job is to press this button when you’re ready.”</li>
+                <li>“Robots don’t mind mistakes. That’s how they learn <em>with</em> us.”</li>
+              </ul>
+              <p class="mt-6"><strong>For parents hovering:</strong></p>
+              <ul>
+                <li>“You’re welcome to watch; we’re focusing on letting them drive the discoveries tonight.”</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <article class="card mt-10">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <span class="icon">📣</span>
+                Station cheat notes
+              </div>
+              <div class="card-meta">
+                One-line goals for each kit so leaders stay aligned.
+              </div>
+            </div>
+            <span class="card-badge">Reference</span>
+          </div>
+          <div class="card-body">
+            <ul class="list-inline">
+              <li class="kit-tag">
+                <span class="dot"></span>Ozobot — follow coloured lines &amp; codes; celebrate “debugging” paths.
+              </li>
+              <li class="kit-tag">
+                <span class="dot"></span>COJI — emoji-based instructions; focus on simple sequences and silliness.
+              </li>
+              <li class="kit-tag">
+                <span class="dot"></span>OSMO — tangible pieces; highlight turn-taking &amp; collaboration.
+              </li>
+              <li class="kit-tag">
+                <span class="dot"></span>iPads — pick one educational app; avoid bouncing between many.
+              </li>
+              <li class="kit-tag">
+                <span class="dot"></span>Rumble &amp; Bumble / Dart — movement &amp; cause-effect; keep floor paths safe.
+              </li>
+              <li class="kit-tag">
+                <span class="dot"></span>Code-A-Pillar — build simple sequences; ask kids to predict what will happen.
+              </li>
+              <li class="kit-tag">
+                <span class="dot"></span>Edison — for slightly more advanced exploration; pair with confident kids or tweens helper.
+              </li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <!-- NOTES & HANDOVER -->
+      <div class="tab-panel" id="panel-notes">
+        <div class="grid grid-cols-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">📝</span>
+                  Quick reflection (2–3 minutes)
+                </div>
+                <div class="card-meta">
+                  Fill this out right after kids leave; future-you will be grateful.
+                </div>
+              </div>
+              <span class="card-badge">Debrief</span>
+            </div>
+            <div class="card-body">
+              <label for="notesWorked" class="small">
+                What worked especially well this session?
+              </label>
+              <textarea id="notesWorked" placeholder="e.g. Ozobot colour-code relay game; pairing shy kids with a confident buddy..."></textarea>
+
+              <label for="notesImprove" class="small mt-6">
+                What would you tweak next time?
+              </label>
+              <textarea id="notesImprove" placeholder="e.g. fewer stations; clearer iPad instructions; start clean-up a bit earlier..."></textarea>
+
+              <label for="notesKids" class="small mt-6">
+                Any notes about specific needs / patterns (no names, just what to remember)?
+              </label>
+              <textarea id="notesKids" placeholder="e.g. one child prefers quieter stations; another loves leading instructions..."></textarea>
+
+              <div class="mt-8 flex-wrap">
+                <button class="btn-xs" id="btnSaveNotes">
+                  💾 Save notes for this session
+                </button>
+                <button class="btn-xs" id="btnExportNotes">
+                  📤 Export notes as text
+                </button>
+              </div>
+              <p class="small mt-4">
+                Notes are stored locally on this device (by date). Export them if you want to share with colleagues or keep in a shared drive.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <span class="icon">📚</span>
+                  Handover &amp; continuity
+                </div>
+                <div class="card-meta">
+                  Make it easy for any staff member to pick up the next week.
+                </div>
+              </div>
+              <span class="card-badge">For the team</span>
+            </div>
+            <div class="card-body">
+              <p>
+                Before you leave:
+              </p>
+              <ul class="checklist">
+                <li>
+                  <input type="checkbox" id="ho1">
+                  <label for="ho1">
+                    Kits are returned to their storage spots, charged if needed, and obvious broken pieces flagged.
+                  </label>
+                </li>
+                <li>
+                  <input type="checkbox" id="ho2">
+                  <label for="ho2">
+                    Rotation plan (if used) and notes are either exported or shown to the next staff member.
+                  </label>
+                </li>
+                <li>
+                  <input type="checkbox" id="ho3">
+                  <label for="ho3">
+                    You’ve written at least <strong>one thing you’d like to repeat</strong> next week.
+                  </label>
+                </li>
+              </ul>
+              <p class="mt-8 small">
+                <strong>Optional:</strong> snap a photo of the room layout or whiteboard prompts and store them alongside your exported notes.
+              </p>
+              <div class="note-box mt-8">
+                <strong>Long-term idea:</strong> Over time, patterns from these notes can feed into improved registration info,
+                accessibility tweaks, or new kits to request.
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-note">
+      <span>
+        Built as a lightweight helper for <strong>Techy Kids</strong> at WBRL.
+        Use, remix, and adapt locally.
+      </span>
+      <span>
+        Zero-harm principle: prioritize child safety, inclusion, and curiosity over perfect tech performance.
+      </span>
+    </footer>
+  </section>
+
+</div>
+
+<script>
+  // --- Constants & basic state ---
+  const KIT_DEFS = [
+    "Ozobot",
+    "COJI",
+    "OSMO",
+    "iPads",
+    "Rumble & Bumble",
+    "Dart",
+    "Code-A-Pillar",
+    "Edison"
+  ];
+
+  const STORAGE_KEYS = {
+    CORE: "techyKids_sessionCore",
+    NOTES: "techyKids_notes"
+  };
+
+  // Splash -> app
+  const splashEl = document.getElementById("splash");
+  const appEl = document.getElementById("app");
+  const btnStart = document.getElementById("btnStart");
+  btnStart.addEventListener("click", () => {
+    splashEl.style.display = "none";
+    appEl.style.display = "block";
+  });
+
+  // Tabs
+  const tabButtons = Array.from(document.querySelectorAll(".tab-btn"));
+  const panels = {
+    overview: document.getElementById("panel-overview"),
+    setup: document.getElementById("panel-setup"),
+    stations: document.getElementById("panel-stations"),
+    flow: document.getElementById("panel-flow"),
+    notes: document.getElementById("panel-notes")
+  };
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tab = btn.dataset.tab;
+      tabButtons.forEach(b => b.classList.toggle("active", b === btn));
+      Object.entries(panels).forEach(([key, panel]) => {
+        panel.classList.toggle("active", key === tab);
+      });
+    });
+  });
+
+  // Session core inputs
+  const coreInputs = {
+    date: document.getElementById("sessionDate"),
+    time: document.getElementById("sessionTime"),
+    kids: document.getElementById("numKids"),
+    leaders: document.getElementById("numLeaders"),
+    focus: document.getElementById("sessionNotesShort")
+  };
+  const btnSaveSessionCore = document.getElementById("btnSaveSessionCore");
+  const sessionSummaryEl = document.getElementById("sessionSummary");
+  const btnReset = document.getElementById("btnReset");
+
+  // Kits list
+  const kitListEl = document.getElementById("kitList");
+  const summaryKidsEl = document.getElementById("summaryKids");
+  const summaryLeadersEl = document.getElementById("summaryLeaders");
+  const summaryStationsEl = document.getElementById("summaryStations");
+  const summaryKidsPerStationEl = document.getElementById("summaryKidsPerStation");
+  const summaryAdviceEl = document.getElementById("summaryAdvice");
+
+  // Rotation
+  const desiredStationsInput = document.getElementById("desiredStations");
+  const rotationsPerKidInput = document.getElementById("rotationsPerKid");
+  const btnGeneratePlan = document.getElementById("btnGeneratePlan");
+  const rotationTableWrapper = document.getElementById("rotationTableWrapper");
+
+  // Notes
+  const notesWorkedEl = document.getElementById("notesWorked");
+  const notesImproveEl = document.getElementById("notesImprove");
+  const notesKidsEl = document.getElementById("notesKids");
+  const btnSaveNotes = document.getElementById("btnSaveNotes");
+  const btnExportNotes = document.getElementById("btnExportNotes");
+
+  // --- Build kit checklist ---
+  function renderKitList() {
+    kitListEl.innerHTML = "";
+    KIT_DEFS.forEach((name, idx) => {
+      const id = "kit_" + idx;
+      const li = document.createElement("li");
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.id = id;
+      cb.dataset.kitName = name;
+      const label = document.createElement("label");
+      label.htmlFor = id;
+      label.innerHTML = `<strong>${name}</strong> – click to include this as a station tonight.`;
+      li.appendChild(cb);
+      li.appendChild(label);
+      kitListEl.appendChild(li);
+      cb.addEventListener("change", updateSummary);
+    });
+  }
+
+  // --- Load & save core session info ---
+  function loadCoreSession() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.CORE);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (data.date) coreInputs.date.value = data.date;
+      if (data.time) coreInputs.time.value = data.time;
+      if (typeof data.kids === "number") coreInputs.kids.value = data.kids;
+      if (typeof data.leaders === "number") coreInputs.leaders.value = data.leaders;
+      if (data.focus) coreInputs.focus.value = data.focus;
+      if (Array.isArray(data.kits)) {
+        data.kits.forEach(name => {
+          const cb = Array.from(kitListEl.querySelectorAll("input[type=checkbox]"))
+            .find(c => c.dataset.kitName === name);
+          if (cb) cb.checked = true;
+        });
+      }
+      desiredStationsInput.value = data.desiredStations || "";
+      rotationsPerKidInput.value = data.rotationsPerKid || rotationsPerKidInput.value;
+    } catch (e) {
+      console.warn("Error loading core session", e);
+    }
+    updateSummary();
+  }
+
+  function saveCoreSession() {
+    const selectedKits = getSelectedKits();
+    const data = {
+      date: coreInputs.date.value || "",
+      time: coreInputs.time.value || "",
+      kids: coreInputs.kids.value ? Number(coreInputs.kids.value) : null,
+      leaders: coreInputs.leaders.value ? Number(coreInputs.leaders.value) : null,
+      focus: coreInputs.focus.value || "",
+      kits: selectedKits,
+      desiredStations: desiredStationsInput.value ? Number(desiredStationsInput.value) : null,
+      rotationsPerKid: rotationsPerKidInput.value ? Number(rotationsPerKidInput.value) : null
+    };
+    try {
+      localStorage.setItem(STORAGE_KEYS.CORE, JSON.stringify(data));
+      updateSummary();
+    } catch (e) {
+      console.warn("Error saving core session", e);
+    }
+  }
+
+  btnSaveSessionCore.addEventListener("click", () => {
+    saveCoreSession();
+    btnSaveSessionCore.textContent = "✅ Saved (this device)";
+    setTimeout(() => {
+      btnSaveSessionCore.textContent = "💾 Save session basics (this device)";
+    }, 2000);
+  });
+
+  btnReset.addEventListener("click", () => {
+    if (!confirm("Reset all planner inputs on this device? (Notes export is recommended first.)")) return;
+    localStorage.removeItem(STORAGE_KEYS.CORE);
+    localStorage.removeItem(STORAGE_KEYS.NOTES);
+    Object.values(coreInputs).forEach(el => el.value = "");
+    Array.from(kitListEl.querySelectorAll("input[type=checkbox]")).forEach(cb => cb.checked = false);
+    desiredStationsInput.value = "";
+    rotationsPerKidInput.value = "3";
+    notesWorkedEl.value = "";
+    notesImproveEl.value = "";
+    notesKidsEl.value = "";
+    rotationTableWrapper.innerHTML = '<p class="muted">Once you generate a plan, it will appear here with groups (A, B, C...) and station assignments per rotation. You can also print this page or copy it into your own notes.</p>';
+    updateSummary();
+  });
+
+  // Update summary text
+  function getSelectedKits() {
+    return Array.from(kitListEl.querySelectorAll("input[type=checkbox]:checked"))
+      .map(cb => cb.dataset.kitName);
+  }
+
+  function updateSummary() {
+    const date = coreInputs.date.value;
+    const kids = coreInputs.kids.value ? Number(coreInputs.kids.value) : null;
+    const leaders = coreInputs.leaders.value ? Number(coreInputs.leaders.value) : null;
+    const kits = getSelectedKits();
+    const focus = coreInputs.focus.value;
+    const parts = [];
+    if (date) parts.push(new Date(date).toLocaleDateString());
+    if (kids) parts.push(kids + " kids");
+    if (kits.length) parts.push(kits.length + " stations");
+    if (focus) parts.push("focus: " + focus);
+    sessionSummaryEl.textContent = parts.length ? parts.join(" · ") : "No session configured yet";
+
+    summaryKidsEl.textContent = kids || "–";
+    summaryLeadersEl.textContent = leaders || "–";
+    summaryStationsEl.textContent = kits.length || "–";
+
+    const stationsCount = kits.length || 0;
+    const kidsPerStation = (kids && stationsCount) ? (kids / stationsCount) : null;
+    summaryKidsPerStationEl.textContent = kidsPerStation ? kidsPerStation.toFixed(1) : "–";
+
+    if (!kids || !stationsCount) {
+      summaryAdviceEl.textContent = "Enter expected kids and tick at least one kit on the Setup & Kits tab.";
+      return;
+    }
+
+    if (kidsPerStation <= 4) {
+      summaryAdviceEl.innerHTML = "Nice balance. Consider small-group discovery with <strong>shared robots</strong> to keep everyone hands-on.";
+    } else if (kidsPerStation <= 6) {
+      summaryAdviceEl.innerHTML = "Manageable. Remind leaders to rotate “drivers” at each station so everyone gets turns.";
+    } else {
+      summaryAdviceEl.innerHTML = "Crowded at each station. You may want to:<br>• reduce active kits to focus support<br>• or recruit an extra helper for robot-heavy spots.";
+    }
+  }
+
+  Object.values(coreInputs).forEach(el => {
+    el.addEventListener("input", () => {
+      updateSummary();
+    });
+  });
+
+  // Kit presets
+  const presetButtons = document.querySelectorAll("button[data-preset]");
+  presetButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const type = btn.dataset.preset;
+      const allCbs = Array.from(kitListEl.querySelectorAll("input[type=checkbox]"));
+      allCbs.forEach(cb => cb.checked = false);
+
+      if (type === "light") {
+        const preferred = ["Ozobot", "OSMO", "iPads", "Code-A-Pillar"];
+        allCbs.forEach(cb => {
+          if (preferred.includes(cb.dataset.kitName)) cb.checked = true;
+        });
+        desiredStationsInput.value = "3";
+      } else if (type === "full") {
+        allCbs.forEach(cb => cb.checked = true);
+        desiredStationsInput.value = "4";
+      }
+      updateSummary();
+    });
+  });
+
+  // Rotation planner
+  function generateRotationPlan() {
+    const kids = coreInputs.kids.value ? Number(coreInputs.kids.value) : null;
+    const kits = getSelectedKits();
+    let stationsCount = desiredStationsInput.value ? Number(desiredStationsInput.value) : kits.length;
+
+    if (!kids || kids <= 0 || kits.length === 0) {
+      rotationTableWrapper.innerHTML =
+        '<p class="muted">To generate a rotation, please enter the number of kids and select at least one kit.</p>';
+      return;
+    }
+    if (!stationsCount || stationsCount < 1) stationsCount = kits.length;
+
+    const rotations = rotationsPerKidInput.value ? Number(rotationsPerKidInput.value) : 3;
+    const groupCount = Math.min(stationsCount, Math.max(1, Math.round(kids / 4)));
+    const groupNames = [];
+    for (let i = 0; i < groupCount; i++) {
+      groupNames.push(String.fromCharCode(65 + i)); // A, B, C...
+    }
+
+    // Basic round-robin assignment: groups rotate through stations
+    const stationNames = kits.slice(0, stationsCount);
+    const rows = [];
+    for (let r = 0; r < rotations; r++) {
+      groupNames.forEach((g, idx) => {
+        const stationIndex = (idx + r) % stationNames.length;
+        rows.push({
+          rotation: r + 1,
+          group: g,
+          station: stationNames[stationIndex]
+        });
+      });
+    }
+
+    // Render table
+    let html = "";
+    html += '<p class="small">Groups are labelled A, B, C… You can assign kids to letters however you like (friends together or mixed).</p>';
+    html += '<table><thead><tr><th>Rotation</th><th>Group</th><th>Station</th></tr></thead><tbody>';
+    rows.forEach(row => {
+      html += `<tr>
+        <td>${row.rotation}</td>
+        <td>${row.group}</td>
+        <td>${row.station}</td>
+      </tr>`;
+    });
+    html += "</tbody></table>";
+    html += '<p class="small mt-6">Adjust freely: if a station is extra popular or glitchy, pause the rotation and let everyone try it together for a bit.</p>';
+
+    rotationTableWrapper.innerHTML = html;
+
+    // Save updated core state too (so rotationsPerKid and desiredStations persist)
+    saveCoreSession();
+  }
+
+  btnGeneratePlan.addEventListener("click", generateRotationPlan);
+
+  // Notes load/save/export
+  function getCurrentDateKey() {
+    const d = coreInputs.date.value;
+    return d || "unspecified-date";
+  }
+
+  function loadNotes() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.NOTES);
+      if (!raw) return;
+      const all = JSON.parse(raw);
+      const key = getCurrentDateKey();
+      if (all[key]) {
+        const n = all[key];
+        notesWorkedEl.value = n.worked || "";
+        notesImproveEl.value = n.improve || "";
+        notesKidsEl.value = n.kids || "";
+      }
+    } catch (e) {
+      console.warn("Error loading notes", e);
+    }
+  }
+
+  function saveNotes() {
+    const key = getCurrentDateKey();
+    let all = {};
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.NOTES);
+      if (raw) all = JSON.parse(raw);
+    } catch (e) {
+      console.warn("Error reading old notes", e);
+    }
+    all[key] = {
+      worked: notesWorkedEl.value || "",
+      improve: notesImproveEl.value || "",
+      kids: notesKidsEl.value || ""
+    };
+    try {
+      localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(all));
+    } catch (e) {
+      console.warn("Error saving notes", e);
+    }
+  }
+
+  btnSaveNotes.addEventListener("click", () => {
+    saveNotes();
+    btnSaveNotes.textContent = "✅ Notes saved";
+    setTimeout(() => {
+      btnSaveNotes.textContent = "💾 Save notes for this session";
+    }, 2000);
+  });
+
+  btnExportNotes.addEventListener("click", () => {
+    const key = getCurrentDateKey();
+    const data = [
+      "Techy Kids – Session Notes",
+      "Date: " + (coreInputs.date.value || "unspecified"),
+      "Focus: " + (coreInputs.focus.value || "–"),
+      "",
+      "What worked:",
+      notesWorkedEl.value || "–",
+      "",
+      "What to tweak:",
+      notesImproveEl.value || "–",
+      "",
+      "Kids / needs notes (no names):",
+      notesKidsEl.value || "–",
+      "",
+      "Generated from the Techy Kids Session Helper dashboard."
+    ].join("\n");
+    const blob = new Blob([data], {type: "text/plain"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `techy-kids-notes-${key}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // When date changes, reload appropriate notes
+  coreInputs.date.addEventListener("change", () => {
+    loadNotes();
+  });
+
+  // Initial render
+  renderKitList();
+  loadCoreSession();
+  loadNotes();
+</script>
+
+</body>
+</html>
