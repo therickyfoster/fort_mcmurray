@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulldog Delivery - Fort McMurray's Premier Delivery Service</title>
+    <meta name="description" content="Fast, reliable delivery service in Fort McMurray, Alberta. Same-day delivery, package tracking, and secure handling. No account required - order as a guest!">
+    <meta name="keywords" content="Fort McMurray delivery, same day delivery, package delivery, courier service, Alberta delivery">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: "🐕";
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links button:hover,
+        .nav-links button.active {
+            color: #667eea;
+        }
+
+        .nav-links button::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: #667eea;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links button:hover::after,
+        .nav-links button.active::after {
+            width: 100%;
+        }
+
+        .quick-track {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .quick-track input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            width: 120px;
+        }
+
+        .quick-track button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: white;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .mobile-menu.show {
+            display: block;
+        }
+
+        .mobile-menu button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .page {
+            display: none;
+            background: white;
+            margin: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            min-height: calc(100vh - 140px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero-section .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .hero-section .description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 4rem 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:nth-child(2) {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+        }
+
+        .feature-card:nth-child(3) {
+            background: linear-gradient(135deg, #55efc4, #00b894);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Service Areas */
+        .service-areas {
+            background: #f8f9fa;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .service-areas h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .area-badge {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .contact-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Order Form */
+        .page-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .page-content {
+            padding: 3rem 2rem;
+        }
+
+        .order-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .guest-notice {
+            background: linear-gradient(135deg, #55efc4, #00b894);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .guest-notice h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .form-section h3 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input.error {
+            border-color: #e74c3c;
+        }
+
+        .form-group input.success {
+            border-color: #00b894;
+        }
+
+        /* Payment Options */
+        .payment-section {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .payment-option {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .payment-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .payment-option.selected {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-color: white;
+        }
+
+        .payment-option input[type="radio"] {
+            display: none;
+        }
+
+        .payment-option .payment-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-option .payment-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Cost Calculator */
+        .cost-calculator {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .cost-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .cost-breakdown {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Tracking Page */
+        .tracking-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tracking-input {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            display: flex;
+            gap: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .tracking-input input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+        }
+
+        .tracking-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .tracking-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Order Result */
+        .order-result {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: none;
+        }
+
+        .order-result.show {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        .result-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .result-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tracking-id {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        /* Status Timeline */
+        .status-timeline {
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        .timeline-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 2rem 0 3rem;
+        }
+
+        .timeline-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            right: 25px;
+            height: 3px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            height: 3px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            z-index: 2;
+            transition: width 1.5s ease;
+            border-radius: 3px;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 3;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            transition: all 0.3s ease;
+            border: 3px solid #e9ecef;
+        }
+
+        .timeline-step.completed {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .timeline-step.active {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .step-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .step-label {
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+            max-width: 100px;
+        }
+
+        /* Order Details */
+        .order-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+
+        .detail-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .detail-card p {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 184, 148, 0.3);
+            transform: translateX(400px);
+            transition: all 0.4s ease;
+            z-index: 1001;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: linear-gradient(45deg, #e17055, #d63031);
+        }
+
+        .notification.success {
+            background: linear-gradient(45deg, #00b894, #00cec9);
+        }
+
+        .notification.warning {
+            background: linear-gradient(45deg, #fdcb6e, #e17055);
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            background: #2d3436;
+            color: white;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #74b9ff;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: #74b9ff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #636e72;
+            padding-top: 1rem;
+            color: #b2bec3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline-steps {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .timeline-steps::before {
+                width: 3px;
+                height: calc(100% - 50px);
+                left: 25px;
+                top: 25px;
+            }
+
+            .timeline-progress {
+                width: 3px !important;
+                left: 25px;
+                top: 25px;
+            }
+
+            .step-labels {
+                flex-direction: column;
+                gap: 2rem;
+                margin-left: 4rem;
+                align-items: flex-start;
+            }
+
+            .step-label {
+                text-align: left;
+                max-width: none;
+            }
+
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                transform: translateY(-200px);
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
+
+            .tracking-input {
+                flex-direction: column;
+            }
+
+            .quick-track {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo" onclick="showPage('home')">Bulldog Delivery</a>
+            <ul class="nav-links">
+                <li><button onclick="showPage('home')" id="nav-home" class="active">Home</button></li>
+                <li><button onclick="showPage('order')" id="nav-order">Place Order</button></li>
+                <li><button onclick="showPage('track')" id="nav-track">Track Order</button></li>
+                <li>
+                    <div class="quick-track">
+                        <input type="text" id="quickTrackInput" placeholder="Track ID" maxlength="15">
+                        <button onclick="quickTrack()">Track</button>
+                    </div>
+                </li>
+            </ul>
+            <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+        <div class="mobile-menu" id="mobile-menu">
+            <button onclick="showPage('home'); toggleMobileMenu()">Home</button>
+            <button onclick="showPage('order'); toggleMobileMenu()">Place Order</button>
+            <button onclick="showPage('track'); toggleMobileMenu()">Track Order</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <div class="hero-section">
+                <h1>Bulldog Delivery</h1>
+                <p class="subtitle">Fort McMurray's Premier Delivery Service</p>
+                <p class="description">Fast, reliable, and always on time - like a loyal bulldog! No account required - order as a guest and pay when we deliver.</p>
+                <div class="cta-buttons">
+                    <button class="cta-button" onclick="showPage('order')">Place Your Order</button>
+                    <button class="cta-button" onclick="showPage('track')">Track Package</button>
+                </div>
+            </div>
+            
+            <div class="features-section">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>⚡ Lightning Fast</h3>
+                        <p>Express delivery in 1-2 hours, same-day delivery available throughout Fort McMurray and surrounding areas. No delays, no excuses.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📱 Real-Time Tracking</h3>
+                        <p>Track your packages in real-time with detailed status updates and estimated delivery times. Always know where your package is.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🛡️ Secure & Reliable</h3>
+                        <p>Your packages are safe with our insured delivery team and secure handling procedures. We treat your packages like our own.</p>
+                    </div>
+                </div>
+
+                <div class="service-areas">
+                    <h2>We Deliver Throughout Fort McMurray</h2>
+                    <p>Serving all neighborhoods with the same reliable service</p>
+                    <div class="areas-grid">
+                        <div class="area-badge">Downtown Fort McMurray</div>
+                        <div class="area-badge">Thickwood Heights</div>
+                        <div class="area-badge">Timberlea</div>
+                        <div class="area-badge">Eagle Ridge</div>
+                        <div class="area-badge">Waterways</div>
+                        <div class="area-badge">Draper</div>
+                        <div class="area-badge">Gregoire</div>
+                        <div class="area-badge">Prairie Creek</div>
+                        <div class="area-badge">Saprae Creek</div>
+                        <div class="area-badge">Surrounding Areas</div>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h4>📞 Phone</h4>
+                        <p><strong>(780) 555-BULL</strong></p>
+                        <p>Call us for immediate assistance</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>📧 Email</h4>
+                        <p><strong>hello@bulldogdelivery.ca</strong></p>
+                        <p>Email us for quotes and info</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>⏰ Hours</h4>
+                        <p><strong>7 AM - 10 PM Daily</strong></p>
+                        <p>Extended hours for your convenience</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>💳 Payment</h4>
+                        <p><strong>Cash, Card, or E-Transfer</strong></p>
+                        <p>Pay when we deliver - no prepayment required</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Page -->
+        <div id="order-page" class="page">
+            <div class="page-header">
+                <h1>Place Your Order</h1>
+                <p>Quick and easy delivery scheduling - no account required!</p>
+            </div>
+            <div class="page-content">
+                <div class="guest-notice">
+                    <h3>🎉 Guest Checkout Available</h3>
+                    <p>No signup required! Just fill out the form below and we'll handle the rest. Pay when we deliver.</p>
+                </div>
+
+                <form class="order-form" id="orderForm">
+                    <div class="form-section">
+                        <h3>📦 Sender Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="senderName">Full Name <span class="required">*</span></label>
+                                <input type="text" id="senderName" required placeholder="Your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="senderPhone">Phone Number <span class="required">*</span></label>
+                                <input type="tel" id="senderPhone" required placeholder="(780) 555-0123">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="senderEmail">Email Address (optional)</label>
+                            <input type="email" id="senderEmail" placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="pickupAddress">Pickup Address <span class="required">*</span></label>
+                            <input type="text" id="pickupAddress" required placeholder="Street address, Fort McMurray, AB">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>📍 Delivery Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipientName">Recipient Name <span class="required">*</span></label>
+                                <input type="text" id="recipientName" required placeholder="Recipient's full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipientPhone">Recipient Phone <span class="required">*</span></label>
+                                <input type="tel" id="recipientPhone" required placeholder="(780) 555-0123">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="deliveryAddress">Delivery Address <span class="required">*</span></label>
+                            <input type="text" id="deliveryAddress" required placeholder="Street address, Fort McMurray, AB">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>📋 Package Details</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="packageType">Package Type <span class="required">*</span></label>
+                                <select id="packageType" required onchange="calculateCost()">
+                                    <option value="">Select package type</option>
+                                    <option value="document">Documents/Letters</option>
+                                    <option value="small">Small Package (under 5 lbs)</option>
+                                    <option value="medium">Medium Package (5-25 lbs)</option>
+                                    <option value="large">Large Package (25-50 lbs)</option>
+                                    <option value="food">Food Delivery</option>
+                                    <option value="grocery">Groceries</option>
+                                    <option value="fragile">Fragile Items</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="deliverySpeed">Delivery Speed <span class="required">*</span></label>
+                                <select id="deliverySpeed" required onchange="calculateCost()">
+                                    <option value="">Select delivery speed</option>
+                                    <option value="express">Express (1-2 hours)</option>
+                                    <option value="same-day">Same Day (4-6 hours)</option>
+                                    <option value="standard">Standard (Next Day)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="packageWeight">Estimated Weight (lbs)</label>
+                            <input type="number" id="packageWeight" placeholder="Enter weight in pounds" min="0" step="0.1" onchange="calculateCost()">
+                        </div>
+                        <div class="form-group">
+                            <label for="specialInstructions">Special Instructions</label>
+                            <textarea id="specialInstructions" rows="3" placeholder="Any special handling instructions, access codes, or delivery notes..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="payment-section">
+                        <h3>💳 Payment Options</h3>
+                        <p>Choose how you'd like to pay when we deliver</p>
+                        <div class="payment-options">
+                            <div class="payment-option selected" onclick="selectPayment('cash')">
+                                <input type="radio" name="payment" value="cash" checked>
+                                <div class="payment-title">💵 Cash at Door</div>
+                                <div class="payment-desc">Pay with cash when we deliver</div>
+                            </div>
+                            <div class="payment-option" onclick="selectPayment('card')">
+                                <input type="radio" name="payment" value="card">
+                                <div class="payment-title">💳 Card at Door</div>
+                                <div class="payment-desc">Pay with debit/credit when we deliver</div>
+                            </div>
+                            <div class="payment-option" onclick="selectPayment('etransfer')">
+                                <input type="radio" name="payment" value="etransfer">
+                                <div class="payment-title">📱 E-Transfer</div>
+                                <div class="payment-desc">Send e-transfer before delivery</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cost-calculator" id="costCalculator" style="display: none;">
+                        <h3>💰 Delivery Cost</h3>
+                        <div class="cost-display" id="costDisplay">$0.00</div>
+                        <p class="cost-breakdown" id="costBreakdown">Select package type and delivery speed to calculate cost</p>
+                        <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8;">
+                            💡 No upfront payment required - pay when we deliver!
+                        </p>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span id="submitText">Place Order - No Payment Required</span>
+                        <span id="submitLoading" style="display: none;"><span class="loading"></span>Processing...</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tracking Page -->
+        <div id="track-page" class="page">
+            <div class="page-header">
+                <h1>Track Your Order</h1>
+                <p>Enter your tracking ID to see real-time delivery status</p>
+            </div>
+            <div class="page-content">
+                <div class="tracking-hero">
+                    <div class="tracking-input">
+                        <input type="text" id="trackingId" placeholder="Enter tracking ID (e.g., BD-ABC123)" onkeypress="handleTrackingKeyPress(event)">
+                        <button class="tracking-btn" onclick="trackOrder()">
+                            <span id="trackText">Track Order</span>
+                            <span id="trackLoading" style="display: none;"><span class="loading"></span>Searching...</span>
+                        </button>
+                    </div>
+                    <p style="color: #666; margin-top: 1rem;">
+                        💡 Tracking IDs are provided immediately after placing your order and sent via SMS/email if provided
+                    </p>
+                </div>
+
+                <div id="orderResult" class="order-result">
+                    <div class="result-header">
+                        <h3>Order Status</h3>
+                        <div class="tracking-id" id="displayTrackingId"></div>
+                    </div>
+                    
+                    <div class="status-timeline">
+                        <div class="timeline-steps">
+                            <div class="timeline-progress" id="timelineProgress"></div>
+                            <div class="timeline-step" id="step1">1</div>
+                            <div class="timeline-step" id="step2">2</div>
+                            <div class="timeline-step" id="step3">3</div>
+                            <div class="timeline-step" id="step4">4</div>
+                        </div>
+                        <div class="step-labels">
+                            <div class="step-label">Order Confirmed</div>
+                            <div class="step-label">Package Picked Up</div>
+                            <div class="step-label">Out for Delivery</div>
+                            <div class="step-label">Delivered</div>
+                        </div>
+                    </div>
+
+                    <div class="order-details" id="orderDetails">
+                        <!-- Details populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Bulldog Delivery</h4>
+                    <p>Fort McMurray's most reliable delivery service. We deliver with the tenacity and loyalty of a bulldog.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Phone: (780) 555-BULL</p>
+                    <p>Email: hello@bulldogdelivery.ca</p>
+                    <p>Hours: 7 AM - 10 PM Daily</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <p>Same-day delivery</p>
+                    <p>Express delivery</p>
+                    <p>Package tracking</p>
+                    <p>Secure handling</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Service Areas</h4>
+                    <p>All Fort McMurray neighborhoods</p>
+                    <p>Surrounding communities</p>
+                    <p>Industrial sites</p>
+                    <p>Remote locations</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bulldog Delivery. All rights reserved. Serving Fort McMurray with pride.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="notification" class="notification">
+        <div id="notificationContent"></div>
+    </div>
+
+    <script>
+        // Bulldog Delivery Management System
+        class BulldogDeliverySystem {
+            constructor() {
+                this.orders = this.loadOrders();
+                this.orderStatuses = ['confirmed', 'picked-up', 'in-transit', 'delivered'];
+                this.selectedPayment = 'cash';
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.startStatusProgressionSimulator();
+                this.createDemoOrders();
+            }
+
+            // Data Management
+            loadOrders() {
+                try {
+                    const orders = localStorage.getItem('bulldogOrders');
+                    return orders ? JSON.parse(orders) : {};
+                } catch (error) {
+                    console.error('Error loading orders:', error);
+                    return {};
+                }
+            }
+
+            saveOrders() {
+                try {
+                    localStorage.setItem('bulldogOrders', JSON.stringify(this.orders));
+                } catch (error) {
+                    console.error('Error saving orders:', error);
+                }
+            }
+
+            generateTrackingId() {
+                const prefix = 'BD';
+                const timestamp = Date.now().toString(36).slice(-4).toUpperCase();
+                const random = Math.random().toString(36).substr(2, 4).toUpperCase();
+                return `${prefix}-${timestamp}${random}`;
+            }
+
+            // Cost Calculation
+            calculateCost(packageType, deliverySpeed, weight = 1) {
+                let baseCost = 0;
+                let speedMultiplier = 1;
+                let weightSurcharge = 0;
+
+                // Base cost by package type
+                const packageCosts = {
+                    'document': 6,
+                    'small': 9,
+                    'medium': 14,
+                    'large': 22,
+                    'food': 8,
+                    'grocery': 12,
+                    'fragile': 18
+                };
+                baseCost = packageCosts[packageType] || 0;
+
+                // Speed multipliers
+                const speedMultipliers = {
+                    'express': 2.5,
+                    'same-day': 1.8,
+                    'standard': 1
+                };
+                speedMultiplier = speedMultipliers[deliverySpeed] || 1;
+
+                // Weight surcharge for packages over 10 lbs
+                if (weight > 10) {
+                    weightSurcharge = (weight - 10) * 0.75;
+                }
+
+                const totalCost = (baseCost * speedMultiplier) + weightSurcharge;
+
+                return {
+                    baseCost,
+                    speedMultiplier,
+                    weightSurcharge,
+                    totalCost: Math.round(totalCost * 100) / 100
+                };
+            }
+
+            calculateEstimatedDelivery(speed) {
+                const now = new Date();
+                const businessHours = { start: 7, end: 22 }; // 7 AM to 10 PM
+                
+                switch (speed) {
+                    case 'express':
+                        now.setHours(now.getHours() + 2);
+                        break;
+                    case 'same-day':
+                        now.setHours(now.getHours() + 6);
+                        break;
+                    case 'standard':
+                        // Next business day at 9 AM
+                        now.setDate(now.getDate() + 1);
+                        now.setHours(9, 0, 0, 0);
+                        break;
+                }
+
+                // Ensure delivery is within business hours
+                if (now.getHours() < businessHours.start) {
+                    now.setHours(businessHours.start, 0, 0, 0);
+                } else if (now.getHours() >= businessHours.end) {
+                    now.setDate(now.getDate() + 1);
+                    now.setHours(businessHours.start, 0, 0, 0);
+                }
+
+                return now;
+            }
+
+            // Order Processing
+            createOrder(orderData) {
+                const trackingId = this.generateTrackingId();
+                const estimatedDelivery = this.calculateEstimatedDelivery(orderData.deliverySpeed);
+                const costInfo = this.calculateCost(orderData.packageType, orderData.deliverySpeed, orderData.packageWeight);
+
+                const order = {
+                    trackingId,
+                    ...orderData,
+                    status: 'confirmed',
+                    currentStep: 1,
+                    orderDate: new Date().toISOString(),
+                    estimatedDelivery: estimatedDelivery.toISOString(),
+                    cost: costInfo.totalCost,
+                    costBreakdown: costInfo,
+                    paymentMethod: this.selectedPayment,
+                    statusHistory: [{
+                        status: 'confirmed',
+                        timestamp: new Date().toISOString(),
+                        message: 'Order confirmed and being prepared for pickup',
+                        location: 'Bulldog Delivery Hub'
+                    }]
+                };
+
+                this.orders[trackingId] = order;
+                this.saveOrders();
+                return order;
+            }
+
+            getOrder(trackingId) {
+                return this.orders[trackingId] || null;
+            }
+
+            updateOrderStatus(trackingId, newStatus, customMessage = null) {
+                const order = this.orders[trackingId];
+                if (!order) return false;
+
+                const statusIndex = this.orderStatuses.indexOf(newStatus);
+                const currentIndex = this.orderStatuses.indexOf(order.status);
+
+                if (statusIndex > currentIndex) {
+                    order.status = newStatus;
+                    order.currentStep = statusIndex + 1;
+                    
+                    const defaultMessages = {
+                        'confirmed': 'Order confirmed and being prepared for pickup',
+                        'picked-up': 'Package has been picked up by our driver and is being transported',
+                        'in-transit': 'Package is out for delivery and will arrive within the estimated time',
+                        'delivered': 'Package has been successfully delivered to recipient!'
+                    };
+
+                    const locations = {
+                        'confirmed': 'Bulldog Delivery Hub',
+                        'picked-up': 'En route to delivery vehicle',
+                        'in-transit': 'Out for delivery',
+                        'delivered': order.deliveryAddress
+                    };
+
+                    order.statusHistory.push({
+                        status: newStatus,
+                        timestamp: new Date().toISOString(),
+                        message: customMessage || defaultMessages[newStatus],
+                        location: locations[newStatus]
+                    });
+
+                    if (newStatus === 'delivered') {
+                        order.deliveredDate = new Date().toISOString();
+                    }
+
+                    this.saveOrders();
+                    return true;
+                }
+                return false;
+            }
+
+            // Status Progression Simulator
+            startStatusProgressionSimulator() {
+                // Progress orders every 45 seconds for demo purposes
+                setInterval(() => {
+                    this.progressRandomOrder();
+                }, 45000);
+            }
+
+            progressRandomOrder() {
+                const activeOrders = Object.values(this.orders).filter(order => 
+                    order.status !== 'delivered' && 
+                    new Date(order.orderDate) < new Date(Date.now() - 15 * 60 * 1000) // At least 15 minutes old
+                );
+
+                if (activeOrders.length === 0) return;
+
+                const randomOrder = activeOrders[Math.floor(Math.random() * activeOrders.length)];
+                const currentIndex = this.orderStatuses.indexOf(randomOrder.status);
+                
+                if (currentIndex < this.orderStatuses.length - 1) {
+                    const nextStatus = this.orderStatuses[currentIndex + 1];
+                    this.updateOrderStatus(randomOrder.trackingId, nextStatus);
+                    
+                    // Show notification if this order is currently being tracked
+                    const currentTrackingId = document.getElementById('trackingId')?.value?.trim()?.toUpperCase();
+                    if (currentTrackingId === randomOrder.trackingId) {
+                        this.showNotification(
+                            `📦 Order ${randomOrder.trackingId} status updated: ${nextStatus.replace('-', ' ')}`, 
+                            'success'
+                        );
+                        this.displayOrderStatus(randomOrder);
+                    }
+                }
+            }
+
+            // UI Functions
+            showNotification(message, type = 'success', duration = 6000) {
+                const notification = document.getElementById('notification');
+                const content = document.getElementById('notificationContent');
+                
+                content.innerHTML = message;
+                notification.className = `notification show ${type}`;
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, duration);
+            }
+
+            updateCostDisplay() {
+                const packageType = document.getElementById('packageType')?.value;
+                const deliverySpeed = document.getElementById('deliverySpeed')?.value;
+                const weight = parseFloat(document.getElementById('packageWeight')?.value) || 1;
+
+                if (!packageType || !deliverySpeed) {
+                    const calculator = document.getElementById('costCalculator');
+                    if (calculator) calculator.style.display = 'none';
+                    return;
+                }
+
+                const costInfo = this.calculateCost(packageType, deliverySpeed, weight);
+                
+                const costDisplay = document.getElementById('costDisplay');
+                const costBreakdown = document.getElementById('costBreakdown');
+                const calculator = document.getElementById('costCalculator');
+                
+                if (costDisplay) costDisplay.textContent = `$${costInfo.totalCost.toFixed(2)}`;
+                if (costBreakdown) {
+                    costBreakdown.innerHTML = `
+                        Base: $${costInfo.baseCost} × ${costInfo.speedMultiplier} (speed) + $${costInfo.weightSurcharge.toFixed(2)} (weight)
+                    `;
+                }
+                if (calculator) calculator.style.display = 'block';
+            }
+
+            displayOrderStatus(orderData) {
+                const orderResult = document.getElementById('orderResult');
+                const displayTrackingId = document.getElementById('displayTrackingId');
+                const timelineProgress = document.getElementById('timelineProgress');
+                const orderDetails = document.getElementById('orderDetails');
+
+                if (!orderResult || !displayTrackingId || !timelineProgress || !orderDetails) return;
+
+                // Show the result container
+                orderResult.classList.add('show');
+                displayTrackingId.textContent = orderData.trackingId;
+
+                // Update timeline
+                const currentStep = orderData.currentStep || 1;
+                const progressWidth = ((currentStep - 1) / 3) * 100;
+                timelineProgress.style.width = progressWidth + '%';
+
+                // Reset all steps
+                for (let i = 1; i <= 4; i++) {
+                    const step = document.getElementById(`step${i}`);
+                    if (step) {
+                        step.classList.remove('completed', 'active');
+                        
+                        if (i < currentStep) {
+                            step.classList.add('completed');
+                        } else if (i === currentStep) {
+                            step.classList.add('active');
+                        }
+                    }
+                }
+
+                // Display order details
+                const orderDate = new Date(orderData.orderDate).toLocaleString();
+                const estimatedDelivery = new Date(orderData.estimatedDelivery).toLocaleString();
+                
+                const latestStatus = orderData.statusHistory[orderData.statusHistory.length - 1];
+                const statusMessage = latestStatus ? latestStatus.message : 'Order is being processed';
+                const currentLocation = latestStatus ? latestStatus.location : 'Processing';
+
+                const paymentMethodText = {
+                    'cash': 'Cash at Door',
+                    'card': 'Card at Door',
+                    'etransfer': 'E-Transfer'
+                };
+
+                orderDetails.innerHTML = `
+                    <div class="detail-card">
+                        <h4>📦 Package Information</h4>
+                        <p><strong>Type:</strong> ${orderData.packageType}</p>
+                        <p><strong>Weight:</strong> ${orderData.packageWeight || 'Not specified'} lbs</p>
+                        <p><strong>Speed:</strong> ${orderData.deliverySpeed}</p>
+                        <p><strong>Cost:</strong> $${orderData.cost?.toFixed(2) || '0.00'}</p>
+                        <p><strong>Payment:</strong> ${paymentMethodText[orderData.paymentMethod] || orderData.paymentMethod}</p>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <h4>📍 Pickup Details</h4>
+                        <p><strong>From:</strong> ${orderData.senderName}</p>
+                        <p><strong>Phone:</strong> ${orderData.senderPhone}</p>
+                        <p><strong>Address:</strong> ${orderData.pickupAddress}</p>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <h4>🎯 Delivery Details</h4>
+                        <p><strong>To:</strong> ${orderData.recipientName}</p>
+                        <p><strong>Phone:</strong> ${orderData.recipientPhone}</p>
+                        <p><strong>Address:</strong> ${orderData.deliveryAddress}</p>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <h4>⏰ Timeline & Status</h4>
+                        <p><strong>Order Placed:</strong> ${orderDate}</p>
+                        <p><strong>Estimated Delivery:</strong> ${estimatedDelivery}</p>
+                        <p><strong>Current Status:</strong> ${statusMessage}</p>
+                        <p><strong>Location:</strong> ${currentLocation}</p>
+                        ${orderData.deliveredDate ? `<p><strong>Delivered:</strong> ${new Date(orderData.deliveredDate).toLocaleString()}</p>` : ''}
+                        ${orderData.specialInstructions ? `<p><strong>Special Instructions:</strong> ${orderData.specialInstructions}</p>` : ''}
+                    </div>
+                `;
+
+                // Scroll to results
+                orderResult.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Event Handlers
+            setupEventListeners() {
+                // Order form submission
+                const orderForm = document.getElementById('orderForm');
+                if (orderForm) {
+                    orderForm.addEventListener('submit', (e) => this.handleOrderSubmission(e));
+                }
+
+                // Cost calculation triggers
+                ['packageType', 'deliverySpeed', 'packageWeight'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('change', () => this.updateCostDisplay());
+                    }
+                });
+
+                // Form validation
+                this.setupFormValidation();
+            }
+
+            setupFormValidation() {
+                const requiredFields = document.querySelectorAll('input[required], select[required]');
+                requiredFields.forEach(field => {
+                    field.addEventListener('blur', () => {
+                        if (!field.value.trim()) {
+                            field.classList.add('error');
+                            field.classList.remove('success');
+                        } else {
+                            field.classList.add('success');
+                            field.classList.remove('error');
+                        }
+                    });
+
+                    field.addEventListener('input', () => {
+                        if (field.value.trim()) {
+                            field.classList.remove('error');
+                        }
+                    });
+                });
+            }
+
+            handleOrderSubmission(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const submitText = document.getElementById('submitText');
+                const submitLoading = document.getElementById('submitLoading');
+                
+                if (!submitBtn || !submitText || !submitLoading) return;
+
+                // Validate required fields
+                const requiredFields = e.target.querySelectorAll('input[required], select[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('error');
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    this.showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.disabled = true;
+                submitText.style.display = 'none';
+                submitLoading.style.display = 'inline-flex';
+
+                // Simulate processing time
+                setTimeout(() => {
+                    try {
+                        const orderData = {
+                            senderName: document.getElementById('senderName')?.value?.trim(),
+                            senderPhone: document.getElementById('senderPhone')?.value?.trim(),
+                            senderEmail: document.getElementById('senderEmail')?.value?.trim(),
+                            pickupAddress: document.getElementById('pickupAddress')?.value?.trim(),
+                            recipientName: document.getElementById('recipientName')?.value?.trim(),
+                            recipientPhone: document.getElementById('recipientPhone')?.value?.trim(),
+                            deliveryAddress: document.getElementById('deliveryAddress')?.value?.trim(),
+                            packageType: document.getElementById('packageType')?.value,
+                            packageWeight: parseFloat(document.getElementById('packageWeight')?.value) || 1,
+                            deliverySpeed: document.getElementById('deliverySpeed')?.value,
+                            specialInstructions: document.getElementById('specialInstructions')?.value?.trim()
+                        };
+
+                        const order = this.createOrder(orderData);
+
+                        // Show success notification
+                        this.showNotification(`
+                            <strong>🎉 Order placed successfully!</strong><br>
+                            Your tracking ID is: <strong>${order.trackingId}</strong><br>
+                            <small>💳 Pay ${order.costBreakdown.totalCost.toFixed(2)} when we deliver</small><br>
+                            <small>📅 Estimated delivery: ${new Date(order.estimatedDelivery).toLocaleString()}</small>
+                        `, 'success', 8000);
+
+                        // Reset form
+                        e.target.reset();
+                        const calculator = document.getElementById('costCalculator');
+                        if (calculator) calculator.style.display = 'none';
+                        
+                        // Reset payment selection
+                        this.selectPayment('cash');
+
+                        // Auto-navigate to tracking page
+                        setTimeout(() => {
+                            const trackingInput = document.getElementById('trackingId');
+                            if (trackingInput) trackingInput.value = order.trackingId;
+                            showPage('track');
+                            this.trackOrder(order.trackingId);
+                        }, 3000);
+
+                    } catch (error) {
+                        console.error('Error placing order:', error);
+                        this.showNotification('❌ Error placing order. Please try again.', 'error');
+                    } finally {
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        submitText.style.display = 'inline';
+                        submitLoading.style.display = 'none';
+                    }
+                }, 2000); // 2 second processing simulation
+            }
+
+            trackOrder(trackingId = null) {
+                const inputTrackingId = trackingId || document.getElementById('trackingId')?.value?.trim()?.toUpperCase();
+                
+                if (!inputTrackingId) {
+                    this.showNotification('Please enter a tracking ID', 'error');
+                    return;
+                }
+
+                const trackBtn = document.querySelector('.tracking-btn');
+                const trackText = document.getElementById('trackText');
+                const trackLoading = document.getElementById('trackLoading');
+                
+                // Show loading state
+                if (trackBtn && trackText && trackLoading) {
+                    trackBtn.disabled = true;
+                    trackText.style.display = 'none';
+                    trackLoading.style.display = 'inline-flex';
+                }
+
+                // Simulate search time
+                setTimeout(() => {
+                    try {
+                        const orderData = this.getOrder(inputTrackingId);
+
+                        if (!orderData) {
+                            this.showNotification('❌ Order not found. Please check your tracking ID.', 'error');
+                            return;
+                        }
+
+                        this.displayOrderStatus(orderData);
+                        this.showNotification('✅ Order found and displayed!', 'success');
+                        
+                    } catch (error) {
+                        console.error('Error tracking order:', error);
+                        this.showNotification('❌ Error tracking order. Please try again.', 'error');
+                    } finally {
+                        // Reset button state
+                        if (trackBtn && trackText && trackLoading) {
+                            trackBtn.disabled = false;
+                            trackText.style.display = 'inline';
+                            trackLoading.style.display = 'none';
+                        }
+                    }
+                }, 1500); // 1.5 second search simulation
+            }
+
+            selectPayment(method) {
+                this.selectedPayment = method;
+                
+                // Update UI
+                document.querySelectorAll('.payment-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                const selectedOption = document.querySelector(`input[value="${method}"]`)?.closest('.payment-option');
+                if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                    selectedOption.querySelector('input').checked = true;
+                }
+            }
+
+            // Demo Data Creation
+            createDemoOrders() {
+                // Only create demo orders if none exist
+                if (Object.keys(this.orders).length > 0) return;
+
+                console.log('Creating demo orders for testing...');
+                
+                const demoOrders = [
+                    {
+                        senderName: 'Sarah Mitchell',
+                        senderPhone: '(780) 555-0123',
+                        senderEmail: 'sarah@email.com',
+                        pickupAddress: '123 Main Street, Fort McMurray, AB T9H 1A1',
+                        recipientName: 'John Wilson',
+                        recipientPhone: '(780) 555-0456',
+                        deliveryAddress: '456 Oak Avenue, Thickwood Heights, AB T9H 2B2',
+                        packageType: 'small',
+                        packageWeight: 3,
+                        deliverySpeed: 'same-day',
+                        specialInstructions: 'Please ring doorbell twice'
+                    },
+                    {
+                        senderName: 'Mike Thompson',
+                        senderPhone: '(780) 555-0789',
+                        senderEmail: 'mike@company.com',
+                        pickupAddress: '789 Business Park, Fort McMurray, AB T9H 3C3',
+                        recipientName: 'Lisa Chen',
+                        recipientPhone: '(780) 555-0321',
+                        deliveryAddress: '321 Elm Street, Timberlea, AB T9H 4D4',
+                        packageType: 'document',
+                        packageWeight: 1,
+                        deliverySpeed: 'express',
+                        specialInstructions: 'Urgent legal documents'
+                    }
+                ];
+
+                demoOrders.forEach((orderData, index) => {
+                    const order = this.createOrder(orderData);
+                    
+                    // Progress some demo orders for variety
+                    if (index === 0) {
+                        setTimeout(() => this.updateOrderStatus(order.trackingId, 'picked-up'), 3000);
+                        setTimeout(() => this.updateOrderStatus(order.trackingId, 'in-transit'), 6000);
+                    }
+                });
+            }
+        }
+
+        // Initialize the system
+        const bulldogSystem = new BulldogDeliverySystem();
+
+        // Global functions for UI
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-links button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            const navButton = document.getElementById('nav-' + pageId);
+            if (navButton) {
+                navButton.classList.add('active');
+            }
+
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) {
+                mobileMenu.classList.remove('show');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('show');
+            }
+        }
+
+        function handleTrackingKeyPress(event) {
+            if (event.key === 'Enter') {
+                bulldogSystem.trackOrder();
+            }
+        }
+
+        function trackOrder() {
+            bulldogSystem.trackOrder();
+        }
+
+        function quickTrack() {
+            const quickInput = document.getElementById('quickTrackInput');
+            if (quickInput && quickInput.value.trim()) {
+                const trackingInput = document.getElementById('trackingId');
+                if (trackingInput) {
+                    trackingInput.value = quickInput.value.trim();
+                }
+                showPage('track');
+                bulldogSystem.trackOrder(quickInput.value.trim());
+                quickInput.value = '';
+            }
+        }
+
+        function calculateCost() {
+            bulldogSystem.updateCostDisplay();
+        }
+
+        function selectPayment(method) {
+            bulldogSystem.selectPayment(method);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show home page by default
+            showPage('home');
+
+            // Handle quick track input
+            const quickTrackInput = document.getElementById('quickTrackInput');
+            if (quickTrackInput) {
+                quickTrackInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        quickTrack();
+                    }
+                });
+            }
+
+            // Setup payment option clicks
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const radioInput = this.querySelector('input[type="radio"]');
+                    if (radioInput) {
+                        selectPayment(radioInput.value);
+                    }
+                });
+            });
+
+            console.log('🐕 Bulldog Delivery System initialized successfully!');
+        });
+    </script>
+</body>
+</html>
