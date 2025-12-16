@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fort McMurray Shadebearer Initiative</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #2d5a3d;
+            --accent-green: #4a9d6f;
+            --light-green: #e8f5e9;
+            --warm-orange: #ff7043;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-green) 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: -40px auto 40px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--accent-green);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-green);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-green) 0%, var(--primary-green) 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -35px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .timeline-content {
+            background: var(--light-green);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .benefit-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .benefit-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .benefit-card:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .benefit-card:hover {
+            transform: scale(1.05);
+        }
+
+        .benefit-title {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .petition-section {
+            background: linear-gradient(135deg, var(--light-green) 0%, white 100%);
+            border: 2px solid var(--accent-green);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .petition-title {
+            font-size: 2.5em;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .petition-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .checkbox-input {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--primary-green) 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(45, 90, 61, 0.3);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 90, 61, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .signature-count {
+            font-size: 1.5em;
+            color: var(--accent-green);
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .seed-phrase {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            word-break: break-all;
+            font-family: monospace;
+            display: none;
+        }
+
+        .seed-phrase.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green) 0%, var(--primary-green) 100%);
+            border-radius: 15px;
+            transition: width 1s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .budget-table th,
+        .budget-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .budget-table th {
+            background: var(--light-green);
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        .budget-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .partner-logos {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 15px;
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: 60px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-light);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .floating-tree {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            box-shadow: 0 4px 20px rgba(74, 157, 111, 0.4);
+            animation: pulse 2s infinite;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2em; }
+            .hero-subtitle { font-size: 1.1em; }
+            .section { padding: 20px; }
+            .stats-grid { margin-top: -30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🌳 Fort McMurray Shadebearer Initiative</h1>
+        <p class="hero-subtitle">Transforming Our City Through Community-Driven Climate Resilience</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Target Shade Sites</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">1,000</span>
+            <span class="stat-label">Trees to Plant</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">5°C</span>
+            <span class="stat-label">Temperature Reduction</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">$2.5M</span>
+            <span class="stat-label">Economic Impact</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">
+                <div class="section-icon">📋</div>
+                Executive Summary
+            </h2>
+            <p style="font-size: 1.1em; line-height: 1.8; color: var(--text-dark);">
+                The Shadebearer Initiative represents Fort McMurray's bold response to climate challenges, transforming our city into a model of resilience and community action. Following the devastating impacts of extreme weather events, this comprehensive program combines immediate heat relief with long-term environmental restoration, creating a sustainable legacy for future generations.
+            </p>
+            <p style="margin-top: 20px; font-size: 1.1em; line-height: 1.8; color: var(--text-dark);">
+                By mobilizing citizens as "Shadebearers" – guardians of our urban forest – we're not just planting trees; we're cultivating a culture of environmental stewardship that will position Fort McMurray as a leader in innovative climate adaptation.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                <div class="section-icon">🚀</div>
+                Implementation Roadmap
+            </h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">Phase 1: Immediate Action (Weeks 1-4)</div>
+                    <div class="timeline-content">
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✓ Deploy emergency shade stations at 10 high-traffic locations</li>
+                            <li>✓ Recruit and train 100 initial Shadebearer volunteers</li>
+                            <li>✓ Launch citywide awareness campaign and digital platform</li>
+                            <li>✓ Establish partnerships with local schools and businesses</li>
+                            <li>✓ Begin soil preparation and site assessment for tree planting</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">Phase 2: Community Mobilization (Months 2-3)</div>
+                    <div class="timeline-content">
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✓ Plant 500 native shade trees in priority zones</li>
+                            <li>✓ Install 25 permanent shade structures with solar panels</li>
+                            <li>✓ Launch Shadebearer Ambassador program in schools</li>
+                            <li>✓ Implement smart irrigation system with IoT sensors</li>
+                            <li>✓ Create interactive community heat map and shade finder app</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">Phase 3: Scaling & Sustainability (Months 4-12)</div>
+                    <div class="timeline-content">
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✓ Expand to 50 shade sites across all neighborhoods</li>
+                            <li>✓ Plant remaining 500 trees with community adoption program</li>
+                            <li>✓ Establish Shadebearer Green Jobs training program</li>
+                            <li>✓ Integrate with provincial climate resilience initiatives</li>
+                            <li>✓ Launch annual Shadebearer Festival and awards program</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                <div class="section-icon">💡</div>
+                Innovation & Technology
+            </h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-title">
+                        <span>📱</span> Smart City Integration
+                    </div>
+                    <p>AI-powered heat monitoring system with real-time alerts and shade routing through municipal app.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-title">
+                        <span>🌐</span> Digital Twin Mapping
+                    </div>
+                    <p>3D visualization of urban canopy coverage with predictive modeling for optimal tree placement.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-title">
+                        <span>🎮</span> Gamified Engagement
+                    </div>
+                    <p>Citizen science platform with rewards, achievements, and leaderboards for environmental actions.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-title">
+                        <span>⚡</span> Green Energy Hubs
+                    </div>
+                    <p>Solar-powered shade structures providing USB charging, WiFi, and emergency cooling stations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                <div class="section-icon">💰</div>
+                Budget & Economic Impact
+            </h2>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Investment Area</th>
+                        <th>Year 1 Budget</th>
+                        <th>Expected ROI</th>
+                        <th>Job Creation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tree Planting & Maintenance</td>
+                        <td>$350,000</td>
+                        <td>$1.2M in property values</td>
+                        <td>25 FTE</td>
+                    </tr>
+                    <tr>
+                        <td>Shade Infrastructure</td>
+                        <td>$450,000</td>
+                        <td>$800K in health savings</td>
+                        <td>15 FTE</td>
+                    </tr>
+                    <tr>
+                        <td>Technology Platform</td>
+                        <td>$150,000</td>
+                        <td>$300K in efficiency gains</td>
+                        <td>8 FTE</td>
+                    </tr>
+                    <tr>
+                        <td>Community Programs</td>
+                        <td>$200,000</td>
+                        <td>$500K in social value</td>
+                        <td>20 FTE</td>
+                    </tr>
+                    <tr>
+                        <td>Administration & Marketing</td>
+                        <td>$100,000</td>
+                        <td>Tourism & reputation boost</td>
+                        <td>5 FTE</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 20px; font-style: italic; color: var(--text-light);">
+                Total Investment: $1.25M | Projected 3-Year Economic Impact: $8.5M | 73 Jobs Created
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                <div class="section-icon">🤝</div>
+                Strategic Partnerships
+            </h2>
+            <div class="partner-logos">
+                <div class="partner-logo">Provincial Gov</div>
+                <div class="partner-logo">Syncrude</div>
+                <div class="partner-logo">Suncor</div>
+                <div class="partner-logo">RMWB</div>
+                <div class="partner-logo">Keyano College</div>
+            </div>
+        </div>
+
+        <div class="petition-section">
+            <h2 class="petition-title">🌱 Support the Shadebearer Initiative</h2>
+            <p style="font-size: 1.1em; margin-bottom: 30px;">Join thousands of Fort McMurray residents in supporting this transformative initiative</p>
+            
+            <div class="signature-count" id="signatureCount">Loading signatures...</div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%">
+                    <span id="progressText">0%</span>
+                </div>
+            </div>
+            
+            <form class="petition-form" id="petitionForm">
+                <div class="form-group">
+                    <label class="form-label" for="name">Full Name *</label>
+                    <input type="text" class="form-input" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address *</label>
+                    <input type="email" class="form-input" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="postal">Postal Code *</label>
+                    <input type="text" class="form-input" id="postal" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" placeholder="T9H 1S2" required>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" class="checkbox-input" id="volunteer">
+                    <label for="volunteer">I'm interested in volunteering as a Shadebearer</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" class="checkbox-input" id="updates">
+                    <label for="updates">Send me updates about the initiative's progress</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" class="checkbox-input" id="consent" required>
+                    <label for="consent">I consent to having my signature counted in support of the Shadebearer Initiative *</label>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">Sign the Petition</button>
+            </form>
+            
+            <div class="seed-phrase" id="seedPhrase">
+                <strong>Your Unique Verification Code:</strong><br>
+                <span id="seedText"></span><br>
+                <small style="color: var(--text-light); display: block; margin-top: 10px;">Save this code as proof of your signature</small>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                <div class="section-icon">📊</div>
+                Success Metrics & KPIs
+            </h2>
+            <ul style="list-style: none; padding: 0; line-height: 2;">
+                <li>🎯 <strong>Urban Canopy Coverage:</strong> Increase from 18% to 30% by 2027</li>
+                <li>🎯 <strong>Heat Island Reduction:</strong> Lower peak temperatures by 5°C in target areas</li>
+                <li>🎯 <strong>Community Engagement:</strong> 10,000+ active Shadebearers within first year</li>
+                <li>🎯 <strong>Health Outcomes:</strong> 40% reduction in heat-related hospital visits</li>
+                <li>🎯 <strong>Carbon Sequestration:</strong> 500 tonnes CO2 annually by year 3</li>
+                <li>🎯 <strong>Economic Development:</strong> $8.5M in direct and indirect economic benefits</li>
+                <li>🎯 <strong>Tourism Impact:</strong> Position Fort McMurray as eco-innovation destination</li>
+            </ul>
+        </div>
+
+        <div class="section" style="background: linear-gradient(135deg, var(--light-green) 0%, white 100%); border: 2px solid var(--accent-green);">
+            <h2 class="section-title">
+                <div class="section-icon">✨</div>
+                Why Fort McMurray, Why Now?
+            </h2>
+            <p style="font-size: 1.1em; line-height: 1.8;">
+                Fort McMurray stands at a pivotal moment. Our community has shown remarkable resilience through wildfire and flood, proving our capacity for unity and action. The Shadebearer Initiative channels this spirit into proactive climate leadership.
+            </p>
+            <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                By embracing this initiative, Fort McMurray will:
+            </p>
+            <ul style="font-size: 1.1em; line-height: 2; margin-top: 20px;">
+                <li>Become Alberta's first "Climate Resilient Community" designation</li>
+                <li>Attract green investment and innovation partnerships</li>
+                <li>Create a replicable model for northern communities worldwide</li>
+                <li>Build a sustainable legacy for our children</li>
+                <li>Transform our narrative from resource extraction to environmental innovation</li>
+            </ul>
+            <p style="font-size: 1.2em; font-weight: bold; text-align: center; margin-top: 30px; color: var(--primary-green);">
+                "Together, we don't just weather the storm – we become the shade that protects our future."
+            </p>
+        </div>
+    </div>
+
+    <div class="floating-tree" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">
+        🌳
+    </div>
+
+    <script>
+        // Simulated signature tracking with security measures
+        let signatures = parseInt(localStorage.getItem('shadebearerSignatures') || '3847');
+        const targetSignatures = 10000;
+        let hasUserSigned = false;
+
+        // Generate unique seed phrase
+        function generateSeedPhrase() {
+            const words = ['shade', 'tree', 'green', 'fort', 'future', 'hope', 'unity', 'growth', 'resilient', 'community', 'canopy', 'leaf'];
+            const numbers = Date.now().toString();
+            const ipHash = btoa(navigator.userAgent).substring(0, 8);
+            
+            let phrase = [];
+            for (let i = 0; i < 4; i++) {
+                phrase.push(words[Math.floor(Math.random() * words.length)]);
+            }
+            phrase.push(ipHash);
+            phrase.push(numbers.substring(numbers.length - 6));
+            
+            return phrase.join('-').toUpperCase();
+        }
+
+        // Check if user has already signed (simplified IP tracking simulation)
+        function checkIfAlreadySigned() {
+            const userFingerprint = btoa(navigator.userAgent + screen.width + screen.height);
+            const signedUsers = JSON.parse(localStorage.getItem('signedUsers') || '[]');
+            return signedUsers.includes(userFingerprint);
+        }
+
+        // Save user signature
+        function saveSignature() {
+            const userFingerprint = btoa(navigator.userAgent + screen.width + screen.height);
+            const signedUsers = JSON.parse(localStorage.getItem('signedUsers') || '[]');
+            
+            if (!signedUsers.includes(userFingerprint)) {
+                signedUsers.push(userFingerprint);
+                localStorage.setItem('signedUsers', JSON.stringify(signedUsers));
+                
+                signatures++;
+                localStorage.setItem('shadebearerSignatures', signatures.toString());
+                updateSignatureDisplay();
+                
+                return true;
+            }
+            return false;
+        }
+
+        // Update signature display
+        function updateSignatureDisplay() {
+            const percentage = Math.min((signatures / targetSignatures) * 100, 100);
+            
+            document.getElementById('signatureCount').textContent = 
+                `${signatures.toLocaleString()} of ${targetSignatures.toLocaleString()} signatures`;
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = Math.round(percentage) + '%';
+        }
+
+        // Form submission handler
+        document.getElementById('petitionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (checkIfAlreadySigned()) {
+                alert('Thank you for your support! You have already signed this petition.');
+                return;
+            }
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const postal = document.getElementById('postal').value;
+            const consent = document.getElementById('consent').checked;
+            
+            if (!consent) {
+                alert('Please provide your consent to sign the petition.');
+                return;
+            }
+            
+            // Validate Fort McMurray postal code (T9H, T9K, T9M)
+            if (!postal.match(/^T9[HKM]\s?[0-9][A-Za-z][0-9]$/i)) {
+                alert('Please enter a valid Fort McMurray postal code.');
+                return;
+            }
+            
+            // Save signature
+            if (saveSignature()) {
+                // Generate and display seed phrase
+                const seedPhrase = generateSeedPhrase();
+                document.getElementById('seedText').textContent = seedPhrase;
+                document.getElementById('seedPhrase').classList.add('show');
+                
+                // Disable form
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').textContent = 'Thank You for Your Support!';
+                
+                // Show success message
+                setTimeout(() => {
+                    alert(`Thank you, ${name}! Your signature has been recorded. Please save your verification code for future reference.`);
+                }, 500);
+            }
+        });
+
+        // Initialize display
+        updateSignatureDisplay();
+
+        // Check if already signed on load
+        if (checkIfAlreadySigned()) {
+            document.getElementById('submitBtn').textContent = 'Already Signed ✓';
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        // Animated counter effect
+        let displayedSignatures = signatures - 50;
+        const counterInterval = setInterval(() => {
+            if (displayedSignatures < signatures) {
+                displayedSignatures += 2;
+                document.getElementById('signatureCount').textContent = 
+                    `${displayedSignatures.toLocaleString()} of ${targetSignatures.toLocaleString()} signatures`;
+            } else {
+                clearInterval(counterInterval);
+                updateSignatureDisplay();
+            }
+        }, 30);
+    </script>
+</body>
+</html>
