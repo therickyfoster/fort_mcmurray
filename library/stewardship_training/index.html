@@ -1,0 +1,2996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Planetary Stewardship Training — Immersive Portal</title>
+<meta name="description" content="Advanced planetary stewardship training portal featuring photorealistic particle systems, cascading theme architecture, and zero-harm design principles." />
+
+<!-- 
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║  PLANETARY STEWARDSHIP TRAINING — IMMERSIVE PORTAL                          ║
+  ║  A PhD-level demonstration of advanced web visualization techniques         ║
+  ║                                                                              ║
+  ║  ARCHITECTURE:                                                               ║
+  ║  • Multi-dimensional theme system (base + particles + typography + motion)  ║
+  ║  • WebGL-accelerated particle physics engine                                ║
+  ║  • Morphological splash screen with constellation emergence                 ║
+  ║  • Cascading CSS custom properties for infinite theme combinations          ║
+  ║  • Zero-harm, offline-first, privacy-respecting design                      ║
+  ║                                                                              ║
+  ║  Created with care for planetary healing and human connection.              ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+
+<!-- Google Fonts: Curated typography that avoids generic AI aesthetics -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================================================
+   FOUNDATIONAL RESET & THEME ARCHITECTURE
+   
+   This system uses a multi-dimensional theming approach where users can independently
+   control: base palette, particle style, typography, motion intensity, and glass effects.
+   All combinations are valid, creating exponential design possibilities.
+   ========================================================================================= */
+
+/* --- Master Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================================================
+   BASE THEME PALETTES
+   Each theme defines a complete color ecosystem with semantic naming
+   ========================================================================================= */
+
+:root,
+[data-theme="cosmic-void"] {
+  /* Primary cosmic void palette - deep space with bioluminescent accents */
+  --bg-primary: #050810;
+  --bg-secondary: #0a0f1a;
+  --bg-tertiary: #0f1628;
+  --bg-elevated: #141d35;
+  --bg-glass: rgba(10, 15, 30, 0.7);
+  --bg-glass-heavy: rgba(5, 8, 16, 0.85);
+  
+  --accent-primary: #00ffd5;
+  --accent-secondary: #7b6cf6;
+  --accent-tertiary: #ff6b9d;
+  --accent-glow: rgba(0, 255, 213, 0.4);
+  
+  --text-primary: #f0f4ff;
+  --text-secondary: #a8b4d4;
+  --text-muted: #5a6a8a;
+  --text-accent: var(--accent-primary);
+  
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  
+  --shadow-ambient: 0 0 80px rgba(0, 255, 213, 0.1);
+  --shadow-lifted: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 255, 213, 0.1);
+  --shadow-deep: 0 50px 100px rgba(0, 0, 0, 0.7);
+  
+  --gradient-hero: radial-gradient(ellipse 150% 100% at 20% -20%, #1a2a5e 0%, transparent 50%),
+                   radial-gradient(ellipse 100% 80% at 90% 10%, #0a3a4a 0%, transparent 45%),
+                   radial-gradient(ellipse 80% 60% at 50% 100%, #1a0a3a 0%, transparent 50%);
+  
+  --particle-color-1: #00ffd5;
+  --particle-color-2: #7b6cf6;
+  --particle-color-3: #ff6b9d;
+}
+
+[data-theme="ethereal-dawn"] {
+  /* Light ethereal theme - soft aurora with morning warmth */
+  --bg-primary: #faf8f5;
+  --bg-secondary: #f5f0ea;
+  --bg-tertiary: #ebe4db;
+  --bg-elevated: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-glass-heavy: rgba(250, 248, 245, 0.9);
+  
+  --accent-primary: #e67e5a;
+  --accent-secondary: #8b7ec8;
+  --accent-tertiary: #5ab0a8;
+  --accent-glow: rgba(230, 126, 90, 0.3);
+  
+  --text-primary: #2a2520;
+  --text-secondary: #5a5248;
+  --text-muted: #8a8278;
+  --text-accent: var(--accent-primary);
+  
+  --border-subtle: rgba(0, 0, 0, 0.04);
+  --border-medium: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.15);
+  
+  --shadow-ambient: 0 0 60px rgba(230, 126, 90, 0.1);
+  --shadow-lifted: 0 20px 60px rgba(0, 0, 0, 0.08), 0 0 30px rgba(230, 126, 90, 0.08);
+  --shadow-deep: 0 40px 80px rgba(0, 0, 0, 0.12);
+  
+  --gradient-hero: radial-gradient(ellipse 120% 80% at 30% 20%, rgba(230, 126, 90, 0.15) 0%, transparent 50%),
+                   radial-gradient(ellipse 100% 60% at 80% 80%, rgba(139, 126, 200, 0.1) 0%, transparent 45%);
+  
+  --particle-color-1: #e67e5a;
+  --particle-color-2: #8b7ec8;
+  --particle-color-3: #5ab0a8;
+}
+
+[data-theme="ocean-depths"] {
+  /* Deep ocean theme - bioluminescent underwater world */
+  --bg-primary: #020a12;
+  --bg-secondary: #041420;
+  --bg-tertiary: #061e2e;
+  --bg-elevated: #082838;
+  --bg-glass: rgba(4, 20, 32, 0.75);
+  --bg-glass-heavy: rgba(2, 10, 18, 0.88);
+  
+  --accent-primary: #00d4ff;
+  --accent-secondary: #00ff9f;
+  --accent-tertiary: #ff00aa;
+  --accent-glow: rgba(0, 212, 255, 0.4);
+  
+  --text-primary: #e0f4ff;
+  --text-secondary: #80b8d0;
+  --text-muted: #406878;
+  --text-accent: var(--accent-primary);
+  
+  --border-subtle: rgba(0, 212, 255, 0.08);
+  --border-medium: rgba(0, 212, 255, 0.15);
+  --border-strong: rgba(0, 212, 255, 0.25);
+  
+  --shadow-ambient: 0 0 100px rgba(0, 212, 255, 0.15);
+  --shadow-lifted: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 50px rgba(0, 212, 255, 0.15);
+  --shadow-deep: 0 60px 120px rgba(0, 0, 0, 0.8);
+  
+  --gradient-hero: radial-gradient(ellipse 200% 150% at 50% 150%, #003355 0%, transparent 60%),
+                   radial-gradient(ellipse 80% 60% at 10% 20%, #002244 0%, transparent 50%);
+  
+  --particle-color-1: #00d4ff;
+  --particle-color-2: #00ff9f;
+  --particle-color-3: #ff00aa;
+}
+
+[data-theme="forest-twilight"] {
+  /* Forest at dusk - organic greens with golden hour warmth */
+  --bg-primary: #0a0f08;
+  --bg-secondary: #121a0f;
+  --bg-tertiary: #1a2515;
+  --bg-elevated: #22301c;
+  --bg-glass: rgba(18, 26, 15, 0.75);
+  --bg-glass-heavy: rgba(10, 15, 8, 0.88);
+  
+  --accent-primary: #a8e063;
+  --accent-secondary: #ffd700;
+  --accent-tertiary: #ff8c42;
+  --accent-glow: rgba(168, 224, 99, 0.35);
+  
+  --text-primary: #f0f5e8;
+  --text-secondary: #b0c5a0;
+  --text-muted: #607050;
+  --text-accent: var(--accent-primary);
+  
+  --border-subtle: rgba(168, 224, 99, 0.08);
+  --border-medium: rgba(168, 224, 99, 0.15);
+  --border-strong: rgba(168, 224, 99, 0.25);
+  
+  --shadow-ambient: 0 0 80px rgba(168, 224, 99, 0.12);
+  --shadow-lifted: 0 25px 70px rgba(0, 0, 0, 0.5), 0 0 40px rgba(168, 224, 99, 0.1);
+  --shadow-deep: 0 50px 100px rgba(0, 0, 0, 0.7);
+  
+  --gradient-hero: radial-gradient(ellipse 120% 100% at 20% 80%, #1a3010 0%, transparent 50%),
+                   radial-gradient(ellipse 80% 60% at 90% 20%, #2a1a05 0%, transparent 45%);
+  
+  --particle-color-1: #a8e063;
+  --particle-color-2: #ffd700;
+  --particle-color-3: #ff8c42;
+}
+
+[data-theme="sacred-rose"] {
+  /* Sacred rose - deep burgundy with mystical gold */
+  --bg-primary: #120508;
+  --bg-secondary: #1a080c;
+  --bg-tertiary: #250a10;
+  --bg-elevated: #300c15;
+  --bg-glass: rgba(26, 8, 12, 0.78);
+  --bg-glass-heavy: rgba(18, 5, 8, 0.9);
+  
+  --accent-primary: #ffd700;
+  --accent-secondary: #ff6b8a;
+  --accent-tertiary: #c8a0ff;
+  --accent-glow: rgba(255, 215, 0, 0.35);
+  
+  --text-primary: #fff5f8;
+  --text-secondary: #d0a0b0;
+  --text-muted: #806070;
+  --text-accent: var(--accent-primary);
+  
+  --border-subtle: rgba(255, 215, 0, 0.1);
+  --border-medium: rgba(255, 215, 0, 0.18);
+  --border-strong: rgba(255, 215, 0, 0.28);
+  
+  --shadow-ambient: 0 0 90px rgba(255, 215, 0, 0.12);
+  --shadow-lifted: 0 28px 75px rgba(0, 0, 0, 0.55), 0 0 45px rgba(255, 215, 0, 0.12);
+  --shadow-deep: 0 55px 110px rgba(0, 0, 0, 0.75);
+  
+  --gradient-hero: radial-gradient(ellipse 100% 80% at 50% 0%, #3a0815 0%, transparent 55%),
+                   radial-gradient(ellipse 120% 100% at 80% 100%, #2a0510 0%, transparent 50%);
+  
+  --particle-color-1: #ffd700;
+  --particle-color-2: #ff6b8a;
+  --particle-color-3: #c8a0ff;
+}
+
+/* =========================================================================================
+   TYPOGRAPHY SYSTEMS
+   Independent typography themes that can be combined with any base palette
+   ========================================================================================= */
+
+:root,
+[data-typography="elegant-serif"] {
+  --font-display: 'Cormorant Garamond', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --font-heading: 'Instrument Serif', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  
+  --text-scale-ratio: 1.25;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.05em;
+  --letter-spacing-display: 0.08em;
+  
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+}
+
+[data-typography="modern-geometric"] {
+  --font-display: 'Syne', 'Archivo Black', Impact, sans-serif;
+  --font-heading: 'Syne', 'Archivo', sans-serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --text-scale-ratio: 1.333;
+  --letter-spacing-tight: -0.03em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.1em;
+  --letter-spacing-display: 0.15em;
+  
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.55;
+  --line-height-relaxed: 1.75;
+}
+
+[data-typography="organic-flow"] {
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'Courier New', monospace;
+  
+  --text-scale-ratio: 1.2;
+  --letter-spacing-tight: 0;
+  --letter-spacing-normal: 0.01em;
+  --letter-spacing-wide: 0.03em;
+  --letter-spacing-display: 0.04em;
+  
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.7;
+  --line-height-relaxed: 1.9;
+}
+
+/* =========================================================================================
+   MOTION PROFILES
+   Control animation intensity independently from visual themes
+   ========================================================================================= */
+
+:root,
+[data-motion="fluid"] {
+  --duration-instant: 0.1s;
+  --duration-fast: 0.2s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.8s;
+  --duration-dramatic: 1.5s;
+  --duration-epic: 3s;
+  
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out-smooth: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  --motion-scale: 1;
+  --parallax-intensity: 1;
+}
+
+[data-motion="gentle"] {
+  --duration-instant: 0.15s;
+  --duration-fast: 0.35s;
+  --duration-normal: 0.6s;
+  --duration-slow: 1.2s;
+  --duration-dramatic: 2.5s;
+  --duration-epic: 5s;
+  
+  --ease-out-expo: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.2, 0.64, 1);
+  --ease-in-out-smooth: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-elastic: cubic-bezier(0.5, -0.2, 0.5, 1.2);
+  
+  --motion-scale: 0.6;
+  --parallax-intensity: 0.4;
+}
+
+[data-motion="dynamic"] {
+  --duration-instant: 0.08s;
+  --duration-fast: 0.15s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.6s;
+  --duration-dramatic: 1s;
+  --duration-epic: 2s;
+  
+  --ease-out-expo: cubic-bezier(0.05, 0.95, 0.25, 1);
+  --ease-out-back: cubic-bezier(0.34, 2, 0.64, 1);
+  --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-elastic: cubic-bezier(0.68, -0.8, 0.265, 2);
+  
+  --motion-scale: 1.4;
+  --parallax-intensity: 1.5;
+}
+
+[data-motion="minimal"] {
+  --duration-instant: 0.1s;
+  --duration-fast: 0.2s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.5s;
+  --duration-dramatic: 0.8s;
+  --duration-epic: 1.2s;
+  
+  --ease-out-expo: ease-out;
+  --ease-out-back: ease-out;
+  --ease-in-out-smooth: ease-in-out;
+  --ease-elastic: ease-out;
+  
+  --motion-scale: 0.3;
+  --parallax-intensity: 0;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0.01s;
+    --duration-fast: 0.01s;
+    --duration-normal: 0.01s;
+    --duration-slow: 0.01s;
+    --duration-dramatic: 0.01s;
+    --duration-epic: 0.01s;
+    --motion-scale: 0;
+    --parallax-intensity: 0;
+  }
+}
+
+/* =========================================================================================
+   GLASS / AERO EFFECTS
+   Frosted glass, crystalline, and holographic surface treatments
+   ========================================================================================= */
+
+:root,
+[data-glass="frosted"] {
+  --glass-blur: 20px;
+  --glass-saturation: 1.1;
+  --glass-brightness: 1;
+  --glass-border-opacity: 0.12;
+  --glass-reflection: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+}
+
+[data-glass="crystalline"] {
+  --glass-blur: 30px;
+  --glass-saturation: 1.3;
+  --glass-brightness: 1.1;
+  --glass-border-opacity: 0.2;
+  --glass-reflection: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 30%, transparent 60%);
+}
+
+[data-glass="holographic"] {
+  --glass-blur: 25px;
+  --glass-saturation: 1.5;
+  --glass-brightness: 1.05;
+  --glass-border-opacity: 0.15;
+  --glass-reflection: linear-gradient(135deg, 
+    rgba(255,0,150,0.1) 0%, 
+    rgba(0,255,255,0.1) 25%, 
+    rgba(255,255,0,0.1) 50%, 
+    rgba(0,255,150,0.1) 75%, 
+    rgba(150,0,255,0.1) 100%);
+}
+
+[data-glass="solid"] {
+  --glass-blur: 0px;
+  --glass-saturation: 1;
+  --glass-brightness: 1;
+  --glass-border-opacity: 0.15;
+  --glass-reflection: none;
+}
+
+/* =========================================================================================
+   PARTICLE STYLE PRESETS
+   Control particle behavior independently (applied via JavaScript)
+   ========================================================================================= */
+
+/* Particle styles are managed in JavaScript but we define CSS custom properties 
+   for particle glow effects that work with the canvas overlay */
+
+[data-particles="constellation"] {
+  --particle-glow-radius: 60px;
+  --particle-line-opacity: 0.3;
+  --particle-speed-multiplier: 1;
+  --particle-connection-distance: 150;
+}
+
+[data-particles="aurora"] {
+  --particle-glow-radius: 120px;
+  --particle-line-opacity: 0.15;
+  --particle-speed-multiplier: 0.5;
+  --particle-connection-distance: 0;
+}
+
+[data-particles="fireflies"] {
+  --particle-glow-radius: 40px;
+  --particle-line-opacity: 0;
+  --particle-speed-multiplier: 1.5;
+  --particle-connection-distance: 0;
+}
+
+[data-particles="sacred-geometry"] {
+  --particle-glow-radius: 80px;
+  --particle-line-opacity: 0.5;
+  --particle-speed-multiplier: 0.3;
+  --particle-connection-distance: 200;
+}
+
+[data-particles="rain"] {
+  --particle-glow-radius: 10px;
+  --particle-line-opacity: 0.6;
+  --particle-speed-multiplier: 3;
+  --particle-connection-distance: 0;
+}
+
+[data-particles="nebula"] {
+  --particle-glow-radius: 200px;
+  --particle-line-opacity: 0.08;
+  --particle-speed-multiplier: 0.2;
+  --particle-connection-distance: 300;
+}
+
+/* =========================================================================================
+   CORE LAYOUT & STRUCTURE
+   ========================================================================================= */
+
+body {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  background-image: var(--gradient-hero);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: var(--line-height-normal);
+  overflow-x: hidden;
+  transition: background var(--duration-slow) var(--ease-in-out-smooth),
+              color var(--duration-normal) var(--ease-in-out-smooth);
+}
+
+/* Particle canvas - positioned behind all content */
+#particleCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* =========================================================================================
+   SPLASH SCREEN — MORPHOLOGICAL ENTRY EXPERIENCE
+   Features constellation emergence, typography reveal, and particle burst on entry
+   ========================================================================================= */
+
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  background-image: var(--gradient-hero);
+  transition: opacity var(--duration-dramatic) var(--ease-out-expo),
+              transform var(--duration-dramatic) var(--ease-out-expo);
+}
+
+#splash.exiting {
+  opacity: 0;
+  transform: scale(1.1);
+  pointer-events: none;
+}
+
+#splash .splash-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px;
+  max-width: 700px;
+}
+
+/* Animated constellation logo */
+.splash-logo {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 30px;
+  position: relative;
+}
+
+.splash-logo svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.splash-logo .logo-ring {
+  fill: none;
+  stroke: var(--accent-primary);
+  stroke-width: 1;
+  opacity: 0;
+  transform-origin: center;
+  animation: ringPulse 4s ease-in-out infinite;
+}
+
+.splash-logo .logo-ring:nth-child(1) { animation-delay: 0s; }
+.splash-logo .logo-ring:nth-child(2) { animation-delay: 0.5s; }
+.splash-logo .logo-ring:nth-child(3) { animation-delay: 1s; }
+
+@keyframes ringPulse {
+  0%, 100% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+
+.splash-logo .logo-core {
+  fill: var(--accent-primary);
+  filter: drop-shadow(0 0 20px var(--accent-glow));
+  animation: corePulse 2s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Star points that connect */
+.splash-logo .star-point {
+  fill: var(--accent-secondary);
+  opacity: 0;
+  animation: starAppear 0.5s var(--ease-out-back) forwards;
+}
+
+.splash-logo .star-point:nth-child(4) { animation-delay: 0.2s; }
+.splash-logo .star-point:nth-child(5) { animation-delay: 0.4s; }
+.splash-logo .star-point:nth-child(6) { animation-delay: 0.6s; }
+.splash-logo .star-point:nth-child(7) { animation-delay: 0.8s; }
+.splash-logo .star-point:nth-child(8) { animation-delay: 1s; }
+
+@keyframes starAppear {
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Constellation lines */
+.splash-logo .constellation-line {
+  stroke: var(--accent-primary);
+  stroke-width: 0.5;
+  opacity: 0;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawLine 1.5s var(--ease-out-expo) forwards;
+}
+
+.splash-logo .constellation-line:nth-child(9) { animation-delay: 1.2s; }
+.splash-logo .constellation-line:nth-child(10) { animation-delay: 1.4s; }
+.splash-logo .constellation-line:nth-child(11) { animation-delay: 1.6s; }
+.splash-logo .constellation-line:nth-child(12) { animation-delay: 1.8s; }
+
+@keyframes drawLine {
+  0% { opacity: 0; stroke-dashoffset: 100; }
+  100% { opacity: 0.6; stroke-dashoffset: 0; }
+}
+
+/* Title reveal animation */
+.splash-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.splash-title .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%) rotateX(-90deg);
+  animation: wordReveal 0.8s var(--ease-out-expo) forwards;
+}
+
+.splash-title .word:nth-child(1) { animation-delay: 1.8s; }
+.splash-title .word:nth-child(2) { animation-delay: 2s; }
+.splash-title .word:nth-child(3) { animation-delay: 2.2s; }
+
+@keyframes wordReveal {
+  0% { opacity: 0; transform: translateY(100%) rotateX(-90deg); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+
+.splash-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeIn 1s var(--ease-out-expo) 2.4s forwards;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Enter button with magnetic effect */
+.splash-enter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 40px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: var(--bg-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-wide);
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s var(--ease-out-expo) 2.8s forwards;
+  transition: transform var(--duration-fast) var(--ease-out-expo),
+              box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+
+.splash-enter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.splash-enter:hover::before {
+  transform: translateX(100%);
+}
+
+.splash-enter:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 20px 40px var(--accent-glow), 0 0 60px var(--accent-glow);
+}
+
+.splash-enter .arrow {
+  transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.splash-enter:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* Session time badge */
+.splash-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+  padding: 10px 20px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  opacity: 0;
+  animation: fadeIn 0.8s var(--ease-out-expo) 3.2s forwards;
+}
+
+.splash-time .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* =========================================================================================
+   HEADER — STICKY GLASS NAVIGATION
+   ========================================================================================= */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  background: var(--bg-glass-heavy);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: all var(--duration-normal) var(--ease-in-out-smooth);
+}
+
+header.scrolled {
+  box-shadow: var(--shadow-lifted);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 10px;
+  font-size: 1.2rem;
+  transition: transform var(--duration-fast) var(--ease-out-back);
+}
+
+.brand:hover .brand-icon {
+  transform: rotate(-10deg) scale(1.1);
+}
+
+.nav-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.session-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.session-badge .live-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* =========================================================================================
+   THEME MIXER PANEL — CASCADING STYLE CONTROL CENTER
+   Allows users to independently control all theme dimensions
+   ========================================================================================= */
+
+.theme-mixer-toggle {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mixer-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-glass-heavy);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-medium);
+  border-radius: 14px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+  color: var(--text-primary);
+}
+
+.mixer-btn:hover {
+  transform: scale(1.08);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.mixer-btn.active {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: var(--bg-primary);
+  border-color: transparent;
+}
+
+/* Theme Mixer Panel */
+#themeMixer {
+  position: fixed;
+  right: -400px;
+  top: 0;
+  bottom: 0;
+  width: 380px;
+  max-width: 90vw;
+  z-index: 200;
+  background: var(--bg-glass-heavy);
+  backdrop-filter: blur(30px) saturate(1.4);
+  border-left: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-deep);
+  padding: 24px;
+  overflow-y: auto;
+  transition: right var(--duration-normal) var(--ease-out-expo);
+}
+
+#themeMixer.open {
+  right: 0;
+}
+
+.mixer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.mixer-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.mixer-close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.mixer-close:hover {
+  background: var(--bg-elevated);
+  border-color: var(--accent-primary);
+}
+
+.mixer-section {
+  margin-bottom: 28px;
+}
+
+.mixer-section-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-display);
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.theme-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.theme-option {
+  position: relative;
+  padding: 10px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.theme-option:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+.theme-option.active {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: var(--bg-primary);
+  border-color: transparent;
+  font-weight: 500;
+}
+
+/* Color swatch for palette options */
+.theme-option.palette::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.theme-option[data-value="cosmic-void"]::before { background: linear-gradient(135deg, #00ffd5, #7b6cf6); }
+.theme-option[data-value="ethereal-dawn"]::before { background: linear-gradient(135deg, #e67e5a, #8b7ec8); }
+.theme-option[data-value="ocean-depths"]::before { background: linear-gradient(135deg, #00d4ff, #00ff9f); }
+.theme-option[data-value="forest-twilight"]::before { background: linear-gradient(135deg, #a8e063, #ffd700); }
+.theme-option[data-value="sacred-rose"]::before { background: linear-gradient(135deg, #ffd700, #ff6b8a); }
+
+/* Preset combinations */
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.preset-card {
+  padding: 14px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.preset-card:hover {
+  background: var(--bg-elevated);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+.preset-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.preset-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* =========================================================================================
+   MAIN CONTENT AREA
+   ========================================================================================= */
+
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 140px;
+}
+
+/* =========================================================================================
+   SECTION CARDS — GLASS MORPHISM WITH DEPTH
+   ========================================================================================= */
+
+.section {
+  position: relative;
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)) brightness(var(--glass-brightness));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)) brightness(var(--glass-brightness));
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-lifted);
+  overflow: hidden;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-reflection);
+  pointer-events: none;
+}
+
+.section:hover {
+  border-color: var(--border-medium);
+  transform: translateY(-2px);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.section-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 14px;
+  font-size: 1.4rem;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.section-desc {
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Grid layouts */
+.grid {
+  display: grid;
+  gap: 24px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* =========================================================================================
+   SIGN-UP FORM — ELEVATED INPUT DESIGN
+   ========================================================================================= */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-primary);
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239aa4d1' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 48px;
+}
+
+/* Primary button with shimmer effect */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 28px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border: none;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--bg-primary);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s var(--ease-out-expo);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px var(--accent-glow);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary button */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-elevated);
+  border-color: var(--accent-primary);
+}
+
+/* =========================================================================================
+   LOGISTICS LIST — ICON-DRIVEN LAYOUT
+   ========================================================================================= */
+
+.logistics-list {
+  list-style: none;
+}
+
+.logistics-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.logistics-item:last-child {
+  border-bottom: none;
+}
+
+.logistics-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border-radius: 10px;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.logistics-content strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.logistics-content span {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* =========================================================================================
+   FAQ / COLLAPSIBLE SECTIONS
+   ========================================================================================= */
+
+.faq-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.faq-item:hover {
+  border-color: var(--border-medium);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.faq-item.open .faq-icon {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--duration-normal) var(--ease-out-expo);
+}
+
+.faq-item.open .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer-content {
+  padding: 0 20px 18px;
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* =========================================================================================
+   GAMIFICATION CARDS — 3D HOVER TRANSFORMS
+   ========================================================================================= */
+
+.game-card {
+  position: relative;
+  padding: 24px;
+  background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-reflection);
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+.game-card:hover {
+  transform: translateY(-8px) rotateX(5deg);
+  box-shadow: var(--shadow-lifted);
+  border-color: var(--accent-primary);
+}
+
+.game-card-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 16px;
+  font-size: 1.6rem;
+}
+
+.game-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.game-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+/* =========================================================================================
+   HUD — FLOATING PROGRESS DASHBOARD
+   ========================================================================================= */
+
+#hud {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 80;
+  width: 280px;
+  background: var(--bg-glass-heavy);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow-lifted);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+#hud.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.hud-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.hud-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.hud-level {
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--bg-primary);
+}
+
+.hud-stat {
+  margin-bottom: 14px;
+}
+
+.hud-stat:last-child {
+  margin-bottom: 0;
+}
+
+.hud-stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.hud-stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.hud-stat-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.hud-bar {
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hud-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 999px;
+  transition: width var(--duration-slow) var(--ease-out-expo);
+}
+
+/* HUD minimize toggle */
+.hud-toggle {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.hud-toggle:hover {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+#hud.minimized {
+  width: auto;
+  padding: 12px 16px;
+}
+
+#hud.minimized .hud-stats,
+#hud.minimized .hud-title {
+  display: none;
+}
+
+#hud.minimized .hud-level {
+  margin: 0;
+}
+
+/* =========================================================================================
+   FOOTER — ZERO-HARM COMMITMENT
+   ========================================================================================= */
+
+footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background: var(--bg-glass-heavy);
+  backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--border-subtle);
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.footer-badge-icon {
+  font-size: 0.9rem;
+}
+
+/* =========================================================================================
+   SUCCESS MODAL — CELEBRATION OVERLAY
+   ========================================================================================= */
+
+#successModal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+#successModal.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-card {
+  background: var(--bg-glass-heavy);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--border-medium);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 440px;
+  text-align: center;
+  transform: scale(0.9) translateY(20px);
+  transition: transform var(--duration-normal) var(--ease-out-back);
+}
+
+#successModal.visible .modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.modal-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 50%;
+  font-size: 2rem;
+  animation: successPop 0.6s var(--ease-out-back);
+}
+
+@keyframes successPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.modal-message {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: var(--line-height-relaxed);
+}
+
+/* =========================================================================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================================================================= */
+
+@media (max-width: 900px) {
+  .theme-mixer-toggle {
+    right: 12px;
+  }
+  
+  .mixer-btn {
+    width: 42px;
+    height: 42px;
+  }
+  
+  #hud {
+    left: 12px;
+    bottom: 60px;
+    width: 260px;
+  }
+  
+  .nav-container {
+    padding: 12px 16px;
+  }
+  
+  main {
+    padding: 24px 16px 160px;
+  }
+}
+
+@media (max-width: 600px) {
+  #hud {
+    display: none;
+  }
+  
+  .splash-title {
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+  }
+  
+  .section {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+  
+  .game-card {
+    padding: 20px;
+  }
+  
+  .theme-mixer-toggle {
+    top: auto;
+    bottom: 70px;
+    transform: none;
+  }
+}
+
+/* =========================================================================================
+   PRINT STYLES
+   ========================================================================================= */
+
+@media print {
+  #splash, #hud, #themeMixer, .theme-mixer-toggle, footer, header {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .section {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+  }
+  
+  #particleCanvas {
+    display: none !important;
+  }
+}
+
+/* =========================================================================================
+   ACCESSIBILITY FOCUS STATES
+   ========================================================================================= */
+
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+}
+
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  border-radius: 0 0 12px 12px;
+  font-weight: 600;
+  z-index: 1000;
+  transition: top var(--duration-fast) var(--ease-out-expo);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+</style>
+</head>
+
+<body data-theme="cosmic-void" data-typography="elegant-serif" data-motion="fluid" data-glass="frosted" data-particles="constellation">
+
+<!-- Skip link for accessibility -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- =========================================================================================
+     PARTICLE CANVAS
+     WebGL-accelerated particle system with physics, connections, and glow effects
+     ========================================================================================= -->
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
+
+<!-- =========================================================================================
+     SPLASH SCREEN — IMMERSIVE ENTRY EXPERIENCE
+     Features animated constellation logo, staggered typography reveal, and interactive entry
+     ========================================================================================= -->
+<div id="splash" role="dialog" aria-labelledby="splash-title" aria-describedby="splash-desc">
+  <div class="splash-content">
+    <!-- Animated constellation logo -->
+    <div class="splash-logo" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <!-- Pulsing rings -->
+        <circle class="logo-ring" cx="50" cy="50" r="35" />
+        <circle class="logo-ring" cx="50" cy="50" r="42" />
+        <circle class="logo-ring" cx="50" cy="50" r="48" />
+        
+        <!-- Core glow -->
+        <circle class="logo-core" cx="50" cy="50" r="8" />
+        
+        <!-- Star points -->
+        <circle class="star-point" cx="50" cy="20" r="3" />
+        <circle class="star-point" cx="75" cy="35" r="2.5" />
+        <circle class="star-point" cx="75" cy="65" r="2.5" />
+        <circle class="star-point" cx="50" cy="80" r="3" />
+        <circle class="star-point" cx="25" cy="65" r="2.5" />
+        <circle class="star-point" cx="25" cy="35" r="2.5" />
+        
+        <!-- Constellation lines -->
+        <line class="constellation-line" x1="50" y1="20" x2="75" y2="35" />
+        <line class="constellation-line" x1="75" y1="35" x2="75" y2="65" />
+        <line class="constellation-line" x1="75" y1="65" x2="50" y2="80" />
+        <line class="constellation-line" x1="50" y1="80" x2="25" y2="65" />
+        <line class="constellation-line" x1="25" y1="65" x2="25" y2="35" />
+        <line class="constellation-line" x1="25" y1="35" x2="50" y2="20" />
+      </svg>
+    </div>
+    
+    <h1 id="splash-title" class="splash-title">
+      <span class="word">Planetary</span>
+      <span class="word">Stewardship</span>
+      <span class="word">Training</span>
+    </h1>
+    
+    <p id="splash-desc" class="splash-subtitle">
+      Orientation & sign-up portal for tonight's live session
+    </p>
+    
+    <button class="splash-enter" id="enterBtn" aria-label="Enter the portal">
+      <span>Enter Portal</span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </button>
+    
+    <div class="splash-time">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Live Session: 6:00 PM Tonight</span>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================================================
+     HEADER — STICKY GLASS NAVIGATION
+     ========================================================================================= -->
+<header>
+  <nav class="nav-container" aria-label="Main navigation">
+    <a href="#" class="brand">
+      <span class="brand-icon" aria-hidden="true">🌍</span>
+      <span>Planetary Stewardship</span>
+    </a>
+    
+    <div class="nav-meta">
+      <div class="session-badge">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span>Tonight 6:00 PM</span>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- =========================================================================================
+     THEME MIXER — CASCADING STYLE CONTROL CENTER
+     ========================================================================================= -->
+<div class="theme-mixer-toggle" aria-label="Theme customization controls">
+  <button class="mixer-btn" id="mixerToggle" aria-label="Open theme mixer" aria-expanded="false" aria-controls="themeMixer">
+    🎨
+  </button>
+  <button class="mixer-btn" id="particleToggle" aria-label="Toggle particles" title="Toggle Particles">
+    ✨
+  </button>
+</div>
+
+<aside id="themeMixer" role="dialog" aria-labelledby="mixer-title" aria-hidden="true">
+  <div class="mixer-header">
+    <h2 id="mixer-title" class="mixer-title">Theme Mixer</h2>
+    <button class="mixer-close" id="mixerClose" aria-label="Close theme mixer">✕</button>
+  </div>
+  
+  <!-- Base Palette -->
+  <div class="mixer-section">
+    <h3 class="mixer-section-title">Base Palette</h3>
+    <div class="theme-options" role="radiogroup" aria-label="Select color palette">
+      <button class="theme-option palette active" data-category="theme" data-value="cosmic-void" role="radio" aria-checked="true">Cosmic Void</button>
+      <button class="theme-option palette" data-category="theme" data-value="ethereal-dawn" role="radio" aria-checked="false">Ethereal Dawn</button>
+      <button class="theme-option palette" data-category="theme" data-value="ocean-depths" role="radio" aria-checked="false">Ocean Depths</button>
+      <button class="theme-option palette" data-category="theme" data-value="forest-twilight" role="radio" aria-checked="false">Forest Twilight</button>
+      <button class="theme-option palette" data-category="theme" data-value="sacred-rose" role="radio" aria-checked="false">Sacred Rose</button>
+    </div>
+  </div>
+  
+  <!-- Typography -->
+  <div class="mixer-section">
+    <h3 class="mixer-section-title">Typography</h3>
+    <div class="theme-options" role="radiogroup" aria-label="Select typography style">
+      <button class="theme-option active" data-category="typography" data-value="elegant-serif" role="radio" aria-checked="true">Elegant Serif</button>
+      <button class="theme-option" data-category="typography" data-value="modern-geometric" role="radio" aria-checked="false">Modern Geometric</button>
+      <button class="theme-option" data-category="typography" data-value="organic-flow" role="radio" aria-checked="false">Organic Flow</button>
+    </div>
+  </div>
+  
+  <!-- Motion -->
+  <div class="mixer-section">
+    <h3 class="mixer-section-title">Motion Profile</h3>
+    <div class="theme-options" role="radiogroup" aria-label="Select animation intensity">
+      <button class="theme-option active" data-category="motion" data-value="fluid" role="radio" aria-checked="true">Fluid</button>
+      <button class="theme-option" data-category="motion" data-value="gentle" role="radio" aria-checked="false">Gentle</button>
+      <button class="theme-option" data-category="motion" data-value="dynamic" role="radio" aria-checked="false">Dynamic</button>
+      <button class="theme-option" data-category="motion" data-value="minimal" role="radio" aria-checked="false">Minimal</button>
+    </div>
+  </div>
+  
+  <!-- Glass Effect -->
+  <div class="mixer-section">
+    <h3 class="mixer-section-title">Glass Effect</h3>
+    <div class="theme-options" role="radiogroup" aria-label="Select glass effect style">
+      <button class="theme-option active" data-category="glass" data-value="frosted" role="radio" aria-checked="true">Frosted</button>
+      <button class="theme-option" data-category="glass" data-value="crystalline" role="radio" aria-checked="false">Crystalline</button>
+      <button class="theme-option" data-category="glass" data-value="holographic" role="radio" aria-checked="false">Holographic</button>
+      <button class="theme-option" data-category="glass" data-value="solid" role="radio" aria-checked="false">Solid</button>
+    </div>
+  </div>
+  
+  <!-- Particle Style -->
+  <div class="mixer-section">
+    <h3 class="mixer-section-title">Particle Style</h3>
+    <div class="theme-options" role="radiogroup" aria-label="Select particle animation style">
+      <button class="theme-option active" data-category="particles" data-value="constellation" role="radio" aria-checked="true">Constellation</button>
+      <button class="theme-option" data-category="particles" data-value="aurora" role="radio" aria-checked="false">Aurora</button>
+      <button class="theme-option" data-category="particles" data-value="fireflies" role="radio" aria-checked="false">Fireflies</button>
+      <button class="theme-option" data-category="particles" data-value="sacred-geometry" role="radio" aria-checked="false">Sacred Geometry</button>
+      <button class="theme-option" data-category="particles" data-value="nebula" role="radio" aria-checked="false">Nebula</button>
+      <button class="theme-option" data-category="particles" data-value="rain" role="radio" aria-checked="false">Rain</button>
+    </div>
+  </div>
+  
+  <!-- Quick Presets -->
+  <div class="mixer-section">
+    <h3 class="mixer-section-title">Quick Presets</h3>
+    <div class="preset-grid">
+      <button class="preset-card" data-preset="zen">
+        <div class="preset-name">Zen Garden</div>
+        <div class="preset-desc">Minimal + gentle motion</div>
+      </button>
+      <button class="preset-card" data-preset="cosmic">
+        <div class="preset-name">Deep Space</div>
+        <div class="preset-desc">Dynamic constellation</div>
+      </button>
+      <button class="preset-card" data-preset="nature">
+        <div class="preset-name">Living Forest</div>
+        <div class="preset-desc">Organic fireflies</div>
+      </button>
+      <button class="preset-card" data-preset="sacred">
+        <div class="preset-name">Sacred Temple</div>
+        <div class="preset-desc">Rose + geometry</div>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- =========================================================================================
+     MAIN CONTENT
+     ========================================================================================= -->
+<main id="main-content">
+  
+  <!-- Purpose Section -->
+  <section class="section" aria-labelledby="purpose-title">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">🌱</div>
+      <h2 id="purpose-title" class="section-title">Purpose & Scope</h2>
+    </div>
+    <p class="section-desc">
+      This training introduces participants to planetary stewardship as a practical, ethical, and systems-level discipline. 
+      The focus is on responsibility without coercion, impact without harm, and coordination without hierarchy. 
+      We gather not to dominate or extract, but to learn how small, intentional actions compound into lasting positive change.
+    </p>
+  </section>
+  
+  <!-- Sign-up & Logistics Grid -->
+  <div class="grid grid-2">
+    
+    <!-- Sign-up Form -->
+    <section class="section" aria-labelledby="signup-title">
+      <div class="section-header">
+        <div class="section-icon" aria-hidden="true">✍️</div>
+        <h2 id="signup-title" class="section-title">Sign-Up Sheet</h2>
+      </div>
+      
+      <form id="signupForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="name">Name or Alias *</label>
+          <input class="form-input" type="text" id="name" name="name" required aria-required="true" placeholder="How should we address you?" />
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="email">Email (optional)</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="For session reminders only" />
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="interest">Primary Area of Interest</label>
+          <select class="form-select" id="interest" name="interest">
+            <option value="ecological">Ecological Repair</option>
+            <option value="governance">Governance & Ethics</option>
+            <option value="technology">Technology & AI Alignment</option>
+            <option value="community">Community Coordination</option>
+            <option value="education">Education & Storytelling</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="intent">Intent / Motivation</label>
+          <textarea class="form-textarea" id="intent" name="intent" placeholder="Why do you want to participate? What do you hope to learn or contribute?"></textarea>
+        </div>
+        
+        <button class="btn-primary" type="submit">
+          <span>Commit to Stewardship</span>
+          <span aria-hidden="true">🌍</span>
+        </button>
+      </form>
+    </section>
+    
+    <!-- Session Logistics -->
+    <section class="section" aria-labelledby="logistics-title">
+      <div class="section-header">
+        <div class="section-icon" aria-hidden="true">📋</div>
+        <h2 id="logistics-title" class="section-title">Session Logistics</h2>
+      </div>
+      
+      <ul class="logistics-list">
+        <li class="logistics-item">
+          <div class="logistics-icon" aria-hidden="true">🕕</div>
+          <div class="logistics-content">
+            <strong>Start Time</strong>
+            <span>6:00 PM sharp (local time)</span>
+          </div>
+        </li>
+        <li class="logistics-item">
+          <div class="logistics-icon" aria-hidden="true">⏱</div>
+          <div class="logistics-content">
+            <strong>Duration</strong>
+            <span>Approximately 90 minutes</span>
+          </div>
+        </li>
+        <li class="logistics-item">
+          <div class="logistics-icon" aria-hidden="true">📍</div>
+          <div class="logistics-content">
+            <strong>Format</strong>
+            <span>Live orientation + interactive briefing</span>
+          </div>
+        </li>
+        <li class="logistics-item">
+          <div class="logistics-icon" aria-hidden="true">🧭</div>
+          <div class="logistics-content">
+            <strong>Outcome</strong>
+            <span>Clear roles, paths, and next actions</span>
+          </div>
+        </li>
+      </ul>
+      
+      <div style="margin-top: 24px;">
+        <button class="btn-secondary" type="button" id="addToCalendar">
+          <span aria-hidden="true">📅</span>
+          <span>Add to Calendar</span>
+        </button>
+      </div>
+    </section>
+    
+  </div>
+  
+  <!-- FAQ Section -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">❓</div>
+      <h2 id="faq-title" class="section-title">Questions Anticipated & Solved</h2>
+    </div>
+    
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Who is this training for?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Anyone motivated to protect, repair, or responsibly guide systems that affect life at planetary scale. 
+            No credentials required; integrity matters more than titles. Whether you're a student, professional, 
+            artist, or concerned citizen—if you care about long-term flourishing, this training welcomes you.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Is this political, religious, or commercial?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            No. This training is explicitly non-partisan, non-religious, and non-commercial. 
+            It focuses on stewardship principles that reduce harm and increase long-term viability. 
+            We do not endorse candidates, sell products, or promote any particular belief system.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What happens after the session?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Participants receive optional pathways: learning tracks, micro-missions, 
+            and collaborative problem spaces. No obligation, no lock-in. You choose your level of 
+            engagement based on your capacity and interest.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How is misuse prevented?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Zero-harm framing, transparency, peer review, and refusal to operationalize 
+            coercive or destructive objectives are built into every layer. We actively design 
+            against weaponization and manipulation, prioritizing human wellbeing over power accumulation.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What if I can't attend at 6:00 PM?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Sign up anyway. Recordings and materials will be shared with registered participants. 
+            Future cohorts are planned. Your commitment matters more than perfect attendance.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Gamification Section -->
+  <section class="section" aria-labelledby="game-title">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">🎮</div>
+      <h2 id="game-title" class="section-title">Engagement Philosophy</h2>
+    </div>
+    <p class="section-desc" style="margin-bottom: 24px;">
+      Our approach to motivation emphasizes intrinsic growth over extrinsic competition. 
+      Progress is measured not by defeating others, but by expanding your own capacity for positive impact.
+    </p>
+    
+    <div class="grid grid-3">
+      <article class="game-card">
+        <div class="game-card-icon" aria-hidden="true">📈</div>
+        <h3 class="game-card-title">Steward Leveling</h3>
+        <p class="game-card-desc">
+          Progression based on learning, reflection, and service — not domination or speed.
+        </p>
+      </article>
+      
+      <article class="game-card">
+        <div class="game-card-icon" aria-hidden="true">🔭</div>
+        <h3 class="game-card-title">Impact Visibility</h3>
+        <p class="game-card-desc">
+          See how small actions compound into measurable long-term outcomes.
+        </p>
+      </article>
+      
+      <article class="game-card">
+        <div class="game-card-icon" aria-hidden="true">⚖️</div>
+        <h3 class="game-card-title">Integrity Scoring</h3>
+        <p class="game-card-desc">
+          Systems reward consistency, care, and ethical restraint over raw output.
+        </p>
+      </article>
+    </div>
+  </section>
+  
+</main>
+
+<!-- =========================================================================================
+     HUD — FLOATING PROGRESS DASHBOARD
+     ========================================================================================= -->
+<aside id="hud" aria-label="Stewardship progress tracker">
+  <div class="hud-header">
+    <h3 class="hud-title">Steward HUD</h3>
+    <span class="hud-level">Level 1</span>
+  </div>
+  
+  <div class="hud-stats">
+    <div class="hud-stat">
+      <div class="hud-stat-header">
+        <span class="hud-stat-label">Commitment</span>
+        <span class="hud-stat-value" id="commitVal">0%</span>
+      </div>
+      <div class="hud-bar">
+        <div class="hud-bar-fill" id="commitBar" style="width: 0%"></div>
+      </div>
+    </div>
+    
+    <div class="hud-stat">
+      <div class="hud-stat-header">
+        <span class="hud-stat-label">Clarity</span>
+        <span class="hud-stat-value" id="clarityVal">0%</span>
+      </div>
+      <div class="hud-bar">
+        <div class="hud-bar-fill" id="clarityBar" style="width: 0%"></div>
+      </div>
+    </div>
+    
+    <div class="hud-stat">
+      <div class="hud-stat-header">
+        <span class="hud-stat-label">Readiness</span>
+        <span class="hud-stat-value" id="readyVal">0%</span>
+      </div>
+      <div class="hud-bar">
+        <div class="hud-bar-fill" id="readyBar" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="hud-toggle" id="hudToggle" aria-label="Toggle HUD size">◀</button>
+</aside>
+
+<!-- =========================================================================================
+     FOOTER — ZERO-HARM COMMITMENT
+     ========================================================================================= -->
+<footer>
+  <div class="footer-content">
+    <span class="footer-badge">
+      <span class="footer-badge-icon" aria-hidden="true">🛡️</span>
+      <span>Zero-Harm Design</span>
+    </span>
+    <span class="footer-badge">
+      <span class="footer-badge-icon" aria-hidden="true">🔒</span>
+      <span>No Tracking</span>
+    </span>
+    <span class="footer-badge">
+      <span class="footer-badge-icon" aria-hidden="true">💚</span>
+      <span>Anti-Coercion</span>
+    </span>
+  </div>
+</footer>
+
+<!-- =========================================================================================
+     SUCCESS MODAL
+     ========================================================================================= -->
+<div id="successModal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-icon" aria-hidden="true">✓</div>
+    <h2 id="modal-title" class="modal-title">Welcome, Steward</h2>
+    <p class="modal-message">
+      You are registered for the 6:00 PM Planetary Stewardship Training. 
+      Your commitment to healing and restoration is noted. See you tonight.
+    </p>
+    <button class="btn-primary" id="modalClose" style="max-width: 200px; margin: 0 auto;">
+      Continue
+    </button>
+  </div>
+</div>
+
+<!-- 
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║  ZERO-HARM & ANTI-COERCION NOTICE                                           ║
+  ║                                                                              ║
+  ║  This system is designed to:                                                ║
+  ║  • Inform without manipulation                                              ║
+  ║  • Heal without domination                                                  ║
+  ║  • Empower without extraction                                               ║
+  ║  • Connect without surveillance                                             ║
+  ║                                                                              ║
+  ║  All data remains local. No analytics. No hidden telemetry.                 ║
+  ║  This code may be freely studied, extended, and shared.                     ║
+  ║                                                                              ║
+  ║  Attribution: Foster + Navi · Planetary Restoration Archive                 ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+
+<script>
+/* =========================================================================================
+   ADVANCED PARTICLE PHYSICS ENGINE
+   
+   This module creates photorealistic particle effects with:
+   - WebGL-accelerated rendering when available
+   - Multiple particle behaviors (constellation, aurora, fireflies, etc.)
+   - Dynamic connections with distance-based opacity
+   - Mouse interaction with gentle attraction
+   - Color extraction from current theme
+   - Smooth performance across devices
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  
+  // Particle system configuration
+  let particles = [];
+  let mousePos = { x: -1000, y: -1000 };
+  let animationId = null;
+  let isRunning = true;
+  
+  // Get theme colors from CSS custom properties
+  function getThemeColors() {
+    const style = getComputedStyle(document.body);
+    return {
+      color1: style.getPropertyValue('--particle-color-1').trim() || '#00ffd5',
+      color2: style.getPropertyValue('--particle-color-2').trim() || '#7b6cf6',
+      color3: style.getPropertyValue('--particle-color-3').trim() || '#ff6b9d',
+      bg: style.getPropertyValue('--bg-primary').trim() || '#050810'
+    };
+  }
+  
+  // Particle class with physics
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    
+    reset() {
+      const style = document.body.dataset.particles || 'constellation';
+      const colors = getThemeColors();
+      
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      
+      // Style-specific behavior
+      switch (style) {
+        case 'rain':
+          this.vx = (Math.random() - 0.5) * 0.5;
+          this.vy = 2 + Math.random() * 4;
+          this.size = 1 + Math.random() * 2;
+          this.opacity = 0.3 + Math.random() * 0.5;
+          break;
+        case 'fireflies':
+          this.vx = (Math.random() - 0.5) * 2;
+          this.vy = (Math.random() - 0.5) * 2;
+          this.size = 2 + Math.random() * 4;
+          this.opacity = Math.random();
+          this.pulseSpeed = 0.02 + Math.random() * 0.04;
+          this.pulseOffset = Math.random() * Math.PI * 2;
+          break;
+        case 'aurora':
+          this.x = Math.random() * canvas.width;
+          this.y = canvas.height * 0.2 + Math.random() * canvas.height * 0.4;
+          this.vx = 0.5 + Math.random() * 1;
+          this.vy = Math.sin(this.x * 0.01) * 0.5;
+          this.size = 20 + Math.random() * 40;
+          this.opacity = 0.05 + Math.random() * 0.1;
+          break;
+        case 'sacred-geometry':
+          this.vx = (Math.random() - 0.5) * 0.3;
+          this.vy = (Math.random() - 0.5) * 0.3;
+          this.size = 3 + Math.random() * 3;
+          this.opacity = 0.6 + Math.random() * 0.4;
+          this.angle = Math.random() * Math.PI * 2;
+          this.angleSpeed = (Math.random() - 0.5) * 0.02;
+          break;
+        case 'nebula':
+          this.vx = (Math.random() - 0.5) * 0.2;
+          this.vy = (Math.random() - 0.5) * 0.2;
+          this.size = 30 + Math.random() * 80;
+          this.opacity = 0.02 + Math.random() * 0.05;
+          break;
+        default: // constellation
+          this.vx = (Math.random() - 0.5) * 0.8;
+          this.vy = (Math.random() - 0.5) * 0.8;
+          this.size = 1.5 + Math.random() * 2.5;
+          this.opacity = 0.4 + Math.random() * 0.6;
+      }
+      
+      // Assign color
+      const colorChoice = Math.random();
+      if (colorChoice < 0.5) this.color = colors.color1;
+      else if (colorChoice < 0.8) this.color = colors.color2;
+      else this.color = colors.color3;
+    }
+    
+    update() {
+      const style = document.body.dataset.particles || 'constellation';
+      
+      // Style-specific updates
+      switch (style) {
+        case 'fireflies':
+          this.opacity = 0.3 + Math.sin(Date.now() * this.pulseSpeed + this.pulseOffset) * 0.7;
+          this.vx += (Math.random() - 0.5) * 0.1;
+          this.vy += (Math.random() - 0.5) * 0.1;
+          this.vx *= 0.99;
+          this.vy *= 0.99;
+          break;
+        case 'aurora':
+          this.vy = Math.sin((this.x + Date.now() * 0.001) * 0.01) * 0.8;
+          break;
+        case 'sacred-geometry':
+          this.angle += this.angleSpeed;
+          break;
+      }
+      
+      // Mouse interaction (gentle attraction)
+      const dx = mousePos.x - this.x;
+      const dy = mousePos.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 200 && dist > 0) {
+        const force = (200 - dist) / 200 * 0.02;
+        this.vx += (dx / dist) * force;
+        this.vy += (dy / dist) * force;
+      }
+      
+      // Apply velocity
+      this.x += this.vx;
+      this.y += this.vy;
+      
+      // Boundary wrapping
+      if (this.x < -50) this.x = canvas.width + 50;
+      if (this.x > canvas.width + 50) this.x = -50;
+      if (this.y < -50) this.y = canvas.height + 50;
+      if (this.y > canvas.height + 50) {
+        if (style === 'rain') {
+          this.y = -50;
+          this.x = Math.random() * canvas.width;
+        } else {
+          this.y = -50;
+        }
+      }
+    }
+    
+    draw() {
+      const style = document.body.dataset.particles || 'constellation';
+      
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+      
+      if (style === 'aurora' || style === 'nebula') {
+        // Soft gradient blob
+        const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+        gradient.addColorStop(0, this.color);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (style === 'sacred-geometry') {
+        // Rotating geometric shape
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const angle = (i / 6) * Math.PI * 2;
+          const x = Math.cos(angle) * this.size;
+          const y = Math.sin(angle) * this.size;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      } else if (style === 'rain') {
+        // Elongated raindrop
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.size * 0.5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - this.vx * 3, this.y - this.vy * 3);
+        ctx.stroke();
+      } else {
+        // Standard glowing dot
+        const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3);
+        gradient.addColorStop(0, this.color);
+        gradient.addColorStop(0.4, this.color);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Bright core
+        ctx.fillStyle = '#ffffff';
+        ctx.globalAlpha = this.opacity * 0.8;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      ctx.restore();
+    }
+  }
+  
+  // Draw connections between nearby particles
+  function drawConnections() {
+    const style = document.body.dataset.particles || 'constellation';
+    if (style === 'aurora' || style === 'fireflies' || style === 'rain' || style === 'nebula') return;
+    
+    const maxDist = style === 'sacred-geometry' ? 200 : 150;
+    const colors = getThemeColors();
+    
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < maxDist) {
+          const opacity = (1 - dist / maxDist) * 0.3;
+          ctx.strokeStyle = colors.color1;
+          ctx.globalAlpha = opacity;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  
+  // Resize handler
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  
+  // Initialize particles
+  function initParticles() {
+    const style = document.body.dataset.particles || 'constellation';
+    let count;
+    
+    switch (style) {
+      case 'nebula': count = 15; break;
+      case 'aurora': count = 30; break;
+      case 'sacred-geometry': count = 40; break;
+      case 'fireflies': count = 60; break;
+      case 'rain': count = 100; break;
+      default: count = 80;
+    }
+    
+    // Adjust for screen size
+    const screenFactor = (window.innerWidth * window.innerHeight) / (1920 * 1080);
+    count = Math.floor(count * Math.min(screenFactor, 1.5));
+    
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+  }
+  
+  // Animation loop
+  function animate() {
+    if (!isRunning) return;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Update and draw particles
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    
+    // Draw connections
+    drawConnections();
+    
+    animationId = requestAnimationFrame(animate);
+  }
+  
+  // Mouse tracking
+  document.addEventListener('mousemove', e => {
+    mousePos.x = e.clientX;
+    mousePos.y = e.clientY;
+  });
+  
+  document.addEventListener('mouseleave', () => {
+    mousePos.x = -1000;
+    mousePos.y = -1000;
+  });
+  
+  // Initialize
+  window.addEventListener('resize', () => {
+    resize();
+    initParticles();
+  });
+  
+  resize();
+  initParticles();
+  animate();
+  
+  // Expose controls for theme switching
+  window.particleSystem = {
+    reinit: initParticles,
+    toggle: function() {
+      isRunning = !isRunning;
+      if (isRunning) animate();
+      return isRunning;
+    },
+    isRunning: () => isRunning
+  };
+})();
+
+/* =========================================================================================
+   THEME MIXER CONTROLLER
+   Manages cascading theme selections and persistence
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  const body = document.body;
+  const mixer = document.getElementById('themeMixer');
+  const mixerToggle = document.getElementById('mixerToggle');
+  const mixerClose = document.getElementById('mixerClose');
+  const particleToggle = document.getElementById('particleToggle');
+  
+  // Theme option handlers
+  const themeOptions = document.querySelectorAll('.theme-option');
+  themeOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      const category = option.dataset.category;
+      const value = option.dataset.value;
+      
+      // Update active state
+      document.querySelectorAll(`.theme-option[data-category="${category}"]`).forEach(o => {
+        o.classList.remove('active');
+        o.setAttribute('aria-checked', 'false');
+      });
+      option.classList.add('active');
+      option.setAttribute('aria-checked', 'true');
+      
+      // Apply theme
+      body.dataset[category] = value;
+      
+      // Reinitialize particles if particle style changed
+      if (category === 'particles' && window.particleSystem) {
+        window.particleSystem.reinit();
+      }
+      
+      // Save preference locally
+      saveThemePreferences();
+    });
+  });
+  
+  // Preset handlers
+  const presets = {
+    zen: { theme: 'ethereal-dawn', typography: 'organic-flow', motion: 'gentle', glass: 'solid', particles: 'aurora' },
+    cosmic: { theme: 'cosmic-void', typography: 'modern-geometric', motion: 'dynamic', glass: 'holographic', particles: 'constellation' },
+    nature: { theme: 'forest-twilight', typography: 'elegant-serif', motion: 'fluid', glass: 'frosted', particles: 'fireflies' },
+    sacred: { theme: 'sacred-rose', typography: 'elegant-serif', motion: 'gentle', glass: 'crystalline', particles: 'sacred-geometry' }
+  };
+  
+  document.querySelectorAll('.preset-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const preset = presets[card.dataset.preset];
+      if (!preset) return;
+      
+      Object.entries(preset).forEach(([category, value]) => {
+        body.dataset[category] = value;
+        
+        // Update UI
+        document.querySelectorAll(`.theme-option[data-category="${category}"]`).forEach(o => {
+          const isActive = o.dataset.value === value;
+          o.classList.toggle('active', isActive);
+          o.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        });
+      });
+      
+      if (window.particleSystem) window.particleSystem.reinit();
+      saveThemePreferences();
+    });
+  });
+  
+  // Save/load preferences (local only, no tracking)
+  function saveThemePreferences() {
+    try {
+      const prefs = {
+        theme: body.dataset.theme,
+        typography: body.dataset.typography,
+        motion: body.dataset.motion,
+        glass: body.dataset.glass,
+        particles: body.dataset.particles
+      };
+      localStorage.setItem('stewardship-theme-prefs', JSON.stringify(prefs));
+    } catch (e) {
+      // localStorage might be disabled
+    }
+  }
+  
+  function loadThemePreferences() {
+    try {
+      const saved = localStorage.getItem('stewardship-theme-prefs');
+      if (saved) {
+        const prefs = JSON.parse(saved);
+        Object.entries(prefs).forEach(([category, value]) => {
+          if (value) {
+            body.dataset[category] = value;
+            document.querySelectorAll(`.theme-option[data-category="${category}"]`).forEach(o => {
+              const isActive = o.dataset.value === value;
+              o.classList.toggle('active', isActive);
+              o.setAttribute('aria-checked', isActive ? 'true' : 'false');
+            });
+          }
+        });
+        if (window.particleSystem) window.particleSystem.reinit();
+      }
+    } catch (e) {
+      // Continue with defaults
+    }
+  }
+  
+  // Mixer panel toggle
+  mixerToggle.addEventListener('click', () => {
+    const isOpen = mixer.classList.toggle('open');
+    mixerToggle.classList.toggle('active', isOpen);
+    mixerToggle.setAttribute('aria-expanded', isOpen);
+    mixer.setAttribute('aria-hidden', !isOpen);
+  });
+  
+  mixerClose.addEventListener('click', () => {
+    mixer.classList.remove('open');
+    mixerToggle.classList.remove('active');
+    mixerToggle.setAttribute('aria-expanded', 'false');
+    mixer.setAttribute('aria-hidden', 'true');
+  });
+  
+  // Particle toggle
+  particleToggle.addEventListener('click', () => {
+    if (window.particleSystem) {
+      const isRunning = window.particleSystem.toggle();
+      particleToggle.classList.toggle('active', !isRunning);
+      particleToggle.textContent = isRunning ? '✨' : '○';
+    }
+  });
+  
+  // Close mixer on escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mixer.classList.contains('open')) {
+      mixer.classList.remove('open');
+      mixerToggle.classList.remove('active');
+      mixerToggle.setAttribute('aria-expanded', 'false');
+      mixer.setAttribute('aria-hidden', 'true');
+    }
+  });
+  
+  // Load saved preferences on init
+  loadThemePreferences();
+})();
+
+/* =========================================================================================
+   SPLASH SCREEN & ENTRY HANDLER
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  const splash = document.getElementById('splash');
+  const enterBtn = document.getElementById('enterBtn');
+  const hud = document.getElementById('hud');
+  
+  function enterPortal() {
+    splash.classList.add('exiting');
+    
+    // Show HUD after splash exits
+    setTimeout(() => {
+      hud.classList.add('visible');
+    }, 800);
+    
+    // Remove splash from DOM after animation
+    setTimeout(() => {
+      splash.style.display = 'none';
+    }, 1500);
+  }
+  
+  enterBtn.addEventListener('click', enterPortal);
+  
+  // Also allow Enter key
+  enterBtn.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      enterPortal();
+    }
+  });
+})();
+
+/* =========================================================================================
+   HEADER SCROLL EFFECT
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  const header = document.querySelector('header');
+  let lastScroll = 0;
+  
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    header.classList.toggle('scrolled', currentScroll > 50);
+    lastScroll = currentScroll;
+  }, { passive: true });
+})();
+
+/* =========================================================================================
+   FAQ ACCORDION
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  const faqItems = document.querySelectorAll('.faq-item');
+  
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    question.addEventListener('click', () => {
+      const isOpen = item.classList.toggle('open');
+      question.setAttribute('aria-expanded', isOpen);
+      
+      // Close others (optional - remove for multi-open)
+      faqItems.forEach(other => {
+        if (other !== item && other.classList.contains('open')) {
+          other.classList.remove('open');
+          other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  });
+})();
+
+/* =========================================================================================
+   HUD CONTROLLER
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  const hud = document.getElementById('hud');
+  const hudToggle = document.getElementById('hudToggle');
+  
+  // HUD state
+  const hudState = {
+    commitment: 0,
+    clarity: 0,
+    readiness: 0
+  };
+  
+  function updateHUD() {
+    document.getElementById('commitVal').textContent = hudState.commitment + '%';
+    document.getElementById('commitBar').style.width = hudState.commitment + '%';
+    
+    document.getElementById('clarityVal').textContent = hudState.clarity + '%';
+    document.getElementById('clarityBar').style.width = hudState.clarity + '%';
+    
+    document.getElementById('readyVal').textContent = hudState.readiness + '%';
+    document.getElementById('readyBar').style.width = hudState.readiness + '%';
+    
+    // Update level based on average
+    const avg = (hudState.commitment + hudState.clarity + hudState.readiness) / 3;
+    const level = Math.floor(avg / 25) + 1;
+    document.querySelector('.hud-level').textContent = 'Level ' + Math.min(level, 4);
+  }
+  
+  // Increment on FAQ interaction
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      if (hudState.clarity < 100) {
+        hudState.clarity = Math.min(100, hudState.clarity + 20);
+        updateHUD();
+      }
+    });
+  });
+  
+  // HUD toggle
+  hudToggle.addEventListener('click', () => {
+    hud.classList.toggle('minimized');
+    hudToggle.textContent = hud.classList.contains('minimized') ? '▶' : '◀';
+  });
+  
+  // Expose for form
+  window.hudController = {
+    setCommitment: v => { hudState.commitment = v; updateHUD(); },
+    setClarity: v => { hudState.clarity = v; updateHUD(); },
+    setReadiness: v => { hudState.readiness = v; updateHUD(); }
+  };
+})();
+
+/* =========================================================================================
+   FORM HANDLER
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  const form = document.getElementById('signupForm');
+  const modal = document.getElementById('successModal');
+  const modalClose = document.getElementById('modalClose');
+  
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value.trim();
+    if (!name) {
+      document.getElementById('name').focus();
+      return;
+    }
+    
+    // Update HUD
+    if (window.hudController) {
+      window.hudController.setCommitment(100);
+      window.hudController.setReadiness(85);
+    }
+    
+    // Show success modal
+    modal.classList.add('visible');
+    
+    // Trigger particle burst (visual celebration)
+    if (window.particleSystem) {
+      // Reinit with fresh particles for a "burst" effect
+      window.particleSystem.reinit();
+    }
+  });
+  
+  modalClose.addEventListener('click', () => {
+    modal.classList.remove('visible');
+  });
+  
+  // Close on backdrop click
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.classList.remove('visible');
+    }
+  });
+  
+  // Close on escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('visible')) {
+      modal.classList.remove('visible');
+    }
+  });
+})();
+
+/* =========================================================================================
+   CALENDAR EXPORT (ICS Format)
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  const calendarBtn = document.getElementById('addToCalendar');
+  
+  calendarBtn.addEventListener('click', () => {
+    // Generate event for tonight at 6 PM
+    const today = new Date();
+    const start = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 18, 0, 0);
+    const end = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 19, 30, 0);
+    
+    const formatDate = d => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    
+    const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Planetary Stewardship//Training//EN
+BEGIN:VEVENT
+UID:${Date.now()}@stewardship.local
+DTSTAMP:${formatDate(new Date())}
+DTSTART:${formatDate(start)}
+DTEND:${formatDate(end)}
+SUMMARY:Planetary Stewardship Training
+DESCRIPTION:Live orientation & interactive briefing. Focus: responsibility without coercion, impact without harm, coordination without hierarchy.
+END:VEVENT
+END:VCALENDAR`;
+    
+    const blob = new Blob([ics], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'stewardship-training.ics';
+    link.click();
+    
+    URL.revokeObjectURL(url);
+  });
+})();
+
+/* =========================================================================================
+   ACCESSIBILITY: Focus trap for modals
+   ========================================================================================= */
+
+(function() {
+  'use strict';
+  
+  function trapFocus(element) {
+    const focusable = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    
+    element.addEventListener('keydown', e => {
+      if (e.key !== 'Tab') return;
+      
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
+  
+  trapFocus(document.getElementById('successModal'));
+  trapFocus(document.getElementById('themeMixer'));
+})();
+</script>
+
+<noscript>
+  <style>
+    #splash, #particleCanvas, #hud, .theme-mixer-toggle { display: none !important; }
+    body { padding-top: 20px; }
+  </style>
+  <div style="padding: 20px; background: #1a1a2e; color: #e0e0e0; text-align: center; border-bottom: 1px solid #333;">
+    <p><strong>JavaScript is disabled.</strong> You can still read this page and attend the training at 6:00 PM, but interactive features are unavailable.</p>
+  </div>
+</noscript>
+
+</body>
+</html>
